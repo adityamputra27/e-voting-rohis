@@ -142,13 +142,15 @@ class KandidatController extends Controller
                     ->join('periode as p', 'ka.periode_id', '=', 'p.id')
                     ->select('s.nama as nama_siswa', 'ka.*', 'k.nama as nama_kelas', 'p.nama as nama_periode')
                     ->orderBy('k.created_at', 'DESC');
+
+        $periode = DB::table('periode')->where('status', 'active')->first();
         
         if (count($kandidat->get()) > 0) {
-            if (!empty(Session::get('periode'))) {
+            if (!empty($periode)) {
                 return response()->json([
                     'status' => true,
                     'message' => 'Success retrieve candidate data',
-                    'data' => $kandidat->where('p.nama', Session::get('periode')->nama)
+                    'data' => $kandidat->where('p.nama', $periode->nama)
                                 ->get()
                 ]);
             } else {

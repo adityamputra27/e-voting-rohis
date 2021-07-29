@@ -8,11 +8,11 @@
                 <p class="text-center">Periode : {{ Session::get('periode')->nama }}</p>
             </div>
             @if($message = Session::get('success'))
-            <div class="alert alert-success" role="alert">
+            <div class="alert alert-success" role="alert" id="pesan">
                 <strong><i class="fa fa-check-circle"></i> {{ $message }}</strong>
             </div>
             @elseif($message = Session::get('error'))
-            <div class="alert alert-danger" role="alert">
+            <div class="alert alert-danger" role="alert" id="pesan">
                 <strong><i class="fa fa-exclamation-triangle"></i> {{ $message }}</strong>
             </div>
             @endif
@@ -42,12 +42,12 @@
                 </div>
                 @endforeach
                 <div class="col-md-8 mx-auto text-center waktu_voting">
-                    <div class="card mb-3">
+                    <div class="card mb-3 shadow">
                         <div class="card-header">
                             <h5 class="pt-1">Hitung Mundur Mulai E-Voting</h5>
                         </div>
                         <div class="card-body">
-                            <h5><span id="hari"></span> &nbsp; <span id="jam"></span> &nbsp; <span id="menit"></span> &nbsp; <span id="detik"></span></h5>
+                            <h5><span class="text-primary" id="hari"></span> &nbsp; <span class="text-primary" id="jam"></span> &nbsp; <span class="text-primary" id="menit"></span> &nbsp; <span class="text-primary" id="detik"></span></h5>
                         </div>
                     </div>
                 </div>
@@ -58,6 +58,7 @@
 @endsection
 @push('scripts')
 <script>
+
 
     function waktuVoting()
     {

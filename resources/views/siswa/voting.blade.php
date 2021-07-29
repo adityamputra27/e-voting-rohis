@@ -5,17 +5,17 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 mx-auto">
-                    <div class="card">
+                    <div class="card shadow">
                         <div class="card-header">
                             <h4 class="card-title">Masukkan Token</h4>
                         </div>
                         <div class="card-body">
                             @if($message = Session::get('success'))
-                            <div class="alert alert-success" role="alert">
+                            <div class="alert alert-success" role="alert" id="pesan">
                                 <strong><i class="fa fa-check-circle"></i> {{ $message }}</strong>
                             </div>
                             @elseif($message = Session::get('error'))
-                            <div class="alert alert-danger" role="alert">
+                            <div class="alert alert-danger" role="alert" id="pesan">
                                 <strong><i class="fa fa-exclamation-triangle"></i> {{ $message }}</strong>
                             </div>
                             @endif

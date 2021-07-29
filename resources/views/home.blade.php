@@ -19,4 +19,13 @@
         </div>
     </section>
     <!-- {{-- end --}} -->
+    <!-- Section step -->
+    <section id="step">
+        <div class="container">
+            <div class="text-center">
+                <h3>Langkah - langkah</h3>
+            </div>
+        </div>
+    </section>
+    <!-- End section step -->
 @endsection

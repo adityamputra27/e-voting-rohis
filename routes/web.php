@@ -31,7 +31,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('kandidat', KandidatController::class);
     Route::resource('waktu-voting', WaktuVotingController::class);
     Route::get('periode', [PeriodeController::class, 'index'])->name('periode.index');
-    Route::get('periode/{periode}/active', [PeriodeController::class, 'set_active'])->name('periode.setactive');
+    Route::get('periode/{periode}/apply', [PeriodeController::class, 'apply'])->name('periode.apply');
     Route::get('get-kandidat', [KandidatController::class, 'get_kandidat'])->name('getkandidat');
 });
 

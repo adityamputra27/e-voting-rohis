@@ -75,18 +75,23 @@ class VotingController extends Controller
                     ->first();
         
         if (!empty($token)) {
-            if (!$cek) {
-                Session::flash('error', 'Token yang anda masukkan salah!');
-                return redirect('siswa/voting/login');
-            } else {
-                if (!$status) {
-                    Session::flash('error', 'Token sudah digunakan!');
+            if (strlen($token) == 6) {
+                if (!$cek) {
+                    Session::flash('error', 'Token yang anda masukkan salah!');
                     return redirect('siswa/voting/login');
                 } else {
-                    Session::put('token', $token);
-                    Session::flash('success', 'Anda berhasil masuk! Silahkan pilih ketua / keputrian. Pilihan anda menentukan untuk ekskul ROHIS kedepannya!');
-                    return redirect('siswa/voting');
+                    if (!$status) {
+                        Session::flash('error', 'Token sudah digunakan!');
+                        return redirect('siswa/voting/login');
+                    } else {
+                        Session::put('token', $token);
+                        Session::flash('success', 'Anda berhasil masuk! Silahkan pilih ketua / keputrian. Pilihan anda menentukan untuk ekskul ROHIS kedepannya!');
+                        return redirect('siswa/voting');
+                    }
                 }
+            } else {
+                Session::flash('error', 'Token hanya 6 digit!');
+                return redirect('siswa/voting/login');
             }
         } else {
             Session::flash('error', 'Silahkan masukkan token!');

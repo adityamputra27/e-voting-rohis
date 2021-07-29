@@ -28,7 +28,7 @@
                         <a href="{{ route('pemilih.create') }}" class="btn btn-primary btn-md"><i class="fa fa-plus-circle"></i> Tambah Data</a>
                     </div> -->
                     <h3 class="card-title">Periode Aktif Saat Ini : <span class="badge badge-primary">
-                        {{  !empty(Session::get('periode')) ? Session::get('periode')->nama : 'Belum Set Periode' }}
+                        {{  !empty($periode_aktif) ? $periode_aktif->nama : 'Belum Set Periode' }}
                     </span></h3>
                 </div>
             </div>
@@ -53,7 +53,11 @@
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $value->nama }}</td>
                                 <td>
-                                    <a href="{{ route('periode.setactive', $value->id) }}" class="btn btn-success"><i class="fa fa-check-circle"></i> Aktifkan</a>
+                                    @if($value->status == 'inactive')
+                                    <a href="{{ route('periode.apply', $value->id) }}" class="btn btn-success"><i class="fa fa-toggle-on"></i> Aktifkan</a>
+                                    @else
+                                    <a href="{{ route('periode.apply', $value->id) }}" class="btn btn-danger"><i class="fa fa-toggle-off"></i> Nonaktifkan</a>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach

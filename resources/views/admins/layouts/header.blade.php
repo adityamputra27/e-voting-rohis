@@ -62,7 +62,7 @@
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
         <a class="nav-link">
-         Periode Aktif : {{ Session::get('periode')->nama ?? 'Belum Set Periode' }}
+         Periode Aktif : {{ $periode_aktif->nama ?? 'Belum Set Periode' }}
         </a>
       </li>
       <li class="nav-item">
