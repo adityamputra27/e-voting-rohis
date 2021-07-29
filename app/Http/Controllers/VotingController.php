@@ -9,6 +9,13 @@ use Session;
 
 class VotingController extends Controller
 {
+    private $periode;
+
+    public function __construct()
+    {
+        $this->periode = DB::table('periode')->where('status', 'active')->first();
+    }
+
     public function index()
     {
         return view('siswa.voting');
@@ -24,27 +31,27 @@ class VotingController extends Controller
                     // ->get();
         
         if (!empty(Session::get('token'))) {
-            if (!empty(Session::get('periode')->id)) {
+            if (!empty($this->periode->id)) {
 
                 $user = DB::table('pemilih')
-                ->join('siswa', 'pemilih.siswa_id', '=', 'siswa.id')
-                ->select('siswa.nama as nama_siswa', 'siswa.jenis_kelamin as jk', 'pemilih.*')
-                ->where('pemilih.token', Session::get('token'))
-                ->first();
+                        ->join('siswa', 'pemilih.siswa_id', '=', 'siswa.id')
+                        ->select('siswa.nama as nama_siswa', 'siswa.jenis_kelamin as jk', 'pemilih.*')
+                        ->where('pemilih.token', Session::get('token'))
+                        ->first();
 
                 if ($user->status_id == 1) {
                     $waktu_voting = DB::table('waktu_voting')
-                                ->where('periode_id', Session::get('periode')->id)
+                                ->where('periode_id', $this->periode->id)
                                 ->first();
                 
                     $timeNow = time();
 
                     if ($user->jk == 'Laki - laki') {
-                        $kandidat = $kandidat->where('p.id', Session::get('periode')->id)
+                        $kandidat = $kandidat->where('p.id', $this->periode->id)
                                             ->where('ka.kategori', 'ketua')
                                             ->get();
                     } else if($user->jk == 'Perempuan') {
-                        $kandidat = $kandidat->where('p.id', Session::get('periode')->id)
+                        $kandidat = $kandidat->where('p.id', $this->periode->id)
                                             ->get();
                     } else {
                         $kandidat = [];

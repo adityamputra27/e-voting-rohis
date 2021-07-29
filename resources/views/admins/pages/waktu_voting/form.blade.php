@@ -39,8 +39,8 @@
                     <div class="form-group">
                         <label for="">Pilih Periode :</label>
                         <select name="periode_id" class="form-control" readonly>
-                            <option value="{{ !empty(Session::get('periode')) ? Session::get('periode')->id : 'Belum Set Periode' }}">
-                            {{ !empty(Session::get('periode')) ? Session::get('periode')->nama : 'Belum Set Periode' }}
+                            <option value="{{ !empty($periode_aktif) ? $periode_aktif->id : 'Belum Set Periode' }}">
+                            {{ !empty($periode_aktif) ? $periode_aktif->nama : 'Belum Set Periode' }}
                             </option>
                         </select>
                     </div>

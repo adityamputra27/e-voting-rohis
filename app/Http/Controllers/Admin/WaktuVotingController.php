@@ -45,8 +45,10 @@ class WaktuVotingController extends Controller
      */
     public function store(Request $request)
     {
+        $periode = DB::table('periode')->where('status', 'active')->first();
+
         $waktu_voting = new WaktuVoting;
-        $waktu_voting->periode_id = Session::get('periode')->id ?? $request->periode_id;
+        $waktu_voting->periode_id = $periode->id ?? $request->periode_id;
         $waktu_voting->tanggal_mulai = Carbon::parse($request->tanggal_mulai)->format('Y-m-d');
         $waktu_voting->jam_mulai = Carbon::parse($request->jam_mulai)->format('H:i:s');
         $waktu_voting->tanggal_selesai = Carbon::parse($request->tanggal_selesai)->format('Y-m-d');
@@ -89,8 +91,10 @@ class WaktuVotingController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $periode = DB::table('periode')->where('status', 'active')->first();
+
         $waktu_voting = WaktuVoting::find($id);
-        $waktu_voting->periode_id = Session::get('periode')->id ?? $request->periode_id;
+        $waktu_voting->periode_id = $periode->id ?? $request->periode_id;
         $waktu_voting->tanggal_mulai = Carbon::parse($request->tanggal_mulai)->format('Y-m-d');
         $waktu_voting->jam_mulai = Carbon::parse($request->jam_mulai)->format('H:i:s');
         $waktu_voting->tanggal_selesai = Carbon::parse($request->tanggal_selesai)->format('Y-m-d');

@@ -44,8 +44,8 @@
                                     <option value="">-- PIlih --</option>
                                     @foreach($periode as $key => $value)
                                     <option value="{{ $value->id }}"
-                                        {{ $value->id == (Session::get('periode')->id ?? []) ? 'selected' : '' }}>
-                                        {{ $value->nama }} {{ $value->id == (Session::get('periode')->id ?? []) ? ' - Sedang Aktif' : '' }}
+                                        {{ $value->id == ($periode_aktif->id ?? []) ? 'selected' : '' }}>
+                                        {{ $value->nama }} {{ $value->id == ($periode_aktif->id ?? []) ? ' - Sedang Aktif' : '' }}
                                     </option>
                                     @endforeach
                                 </select>

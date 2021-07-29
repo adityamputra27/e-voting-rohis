@@ -64,9 +64,9 @@
                         <label for="">Pilih Periode :</label>
                         <select name="periode_id" class="form-control" readonly>
                             <option value="
-                            {{ !empty($kandidat) ? $kandidat->periode_id : (!empty(Session::get('periode')) ? Session::get('periode')->id : 'Belum Set Periode') }}
+                            {{ !empty($kandidat) ? $kandidat->periode_id : (!empty($periode_aktif) ? $periode_aktif->id : 'Belum Set Periode') }}
                             ">
-                            {{ !empty($kandidat) ? $kandidat->nama_periode : (!empty(Session::get('periode')) ? Session::get('periode')->nama : 'Belum Set Periode') }}
+                            {{ !empty($kandidat) ? $kandidat->nama_periode : (!empty($periode_aktif) ? $periode_aktif->nama : 'Belum Set Periode') }}
                             </option>
                         </select>
                     </div>
