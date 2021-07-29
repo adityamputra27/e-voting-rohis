@@ -19,7 +19,7 @@
             <div class="row">
                 @foreach($kandidat as $key => $value)
                 <div class="col-md-4 hide kandidat">
-                    <div class="card mb-3">
+                    <div class="card mb-3 shadow">
                         <div class="card-body">
                             <div class="text-center">
                                 <img src="{{ Storage::url($value->foto) }}" width="150" alt="" class="img-fluid img-circle mb-3" style="border-radius: 50%;">
@@ -83,10 +83,10 @@
             if (distance < 0) {
                 clearInterval(x)
                 // $(this).parent().parent().parent().remove()
-                $('.waktu_voting').remove()
+                $('.waktu_voting').fadeOut().remove()
                 $('.kandidat').removeClass('hide');
             } else {
-                $('.waktu_voting').show()
+                $('.waktu_voting').fadeIn().show()
                 $('.kandidat').addClass('hide');
             }
 
@@ -139,7 +139,12 @@
                         _token: token
                     },
                     success:function(data) {
-                        console.log(data)
+                        // console.log(data.status)
+                        if (data.status == true) {
+                            // setTimeout(() => {
+                                window.location.href = data.url
+                            // }, 1000);
+                        }
                     }
                 })
             } else if (result.isDenied) {

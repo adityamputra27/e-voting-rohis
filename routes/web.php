@@ -44,4 +44,5 @@ Route::prefix('siswa')->group(function () {
     Route::post('voting/save/{param}', [VotingController::class, 'simpan_suara'])->name('simpan_suara');
     Route::post('voting/cek-token', [VotingController::class, 'cektoken'])->name('cektoken');
     Route::get('voting/logout', [VotingController::class, 'logout_siswa'])->name('logout_siswa');
+    Route::get('/voting/selesai', [VotingController::class, 'selesai_voting'])->name('sudah_voting');
 });

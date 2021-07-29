@@ -1,0 +1,23 @@
+@extends('siswa.layouts.header')
+@section('content_siswa')
+    <!-- {{-- sectionhero --}} -->
+    <section id="" class="">
+        <div class="container">
+            <div class="mb-5 mt-5">
+                <h3 class="text-center">Terima Kasih Sudah Memberikan hak suara anda!</h3>
+                <p class="text-center">Periode : {{ Session::get('periode')->nama ?? 'Belum Set Periode'}}</p>
+            </div>
+            <div class="text-center">
+                <img src="{{ asset('assets/users/images/selesai.png') }}" class="img-fluid" alt="" width="500">
+            </div>
+            <div class="row">
+                <div class="col-md-4 mx-auto">
+                    <div class="">
+                        <a href="{{ route('logout_siswa') }}" class="btn btn-primary btn-get-started border-none btn-block"><i class="fa fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- {{-- end --}} -->
+@endsection

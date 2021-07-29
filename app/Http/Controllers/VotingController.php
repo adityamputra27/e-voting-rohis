@@ -28,27 +28,32 @@ class VotingController extends Controller
 
                 $user = DB::table('pemilih')
                 ->join('siswa', 'pemilih.siswa_id', '=', 'siswa.id')
-                ->select('siswa.nama as nama_siswa', 'siswa.jenis_kelamin as jk')
+                ->select('siswa.nama as nama_siswa', 'siswa.jenis_kelamin as jk', 'pemilih.*')
                 ->where('pemilih.token', Session::get('token'))
                 ->first();
 
-                $waktu_voting = DB::table('waktu_voting')
+                if ($user->status_id == 1) {
+                    $waktu_voting = DB::table('waktu_voting')
                                 ->where('periode_id', Session::get('periode')->id)
                                 ->first();
                 
-                $timeNow = time();
+                    $timeNow = time();
 
-                if ($user->jk == 'Laki - laki') {
-                    $kandidat = $kandidat->where('p.id', Session::get('periode')->id)
-                                        ->where('ka.kategori', 'ketua')
-                                        ->get();
-                } else if($user->jk == 'Perempuan') {
-                    $kandidat = $kandidat->where('p.id', Session::get('periode')->id)
-                                        ->get();
+                    if ($user->jk == 'Laki - laki') {
+                        $kandidat = $kandidat->where('p.id', Session::get('periode')->id)
+                                            ->where('ka.kategori', 'ketua')
+                                            ->get();
+                    } else if($user->jk == 'Perempuan') {
+                        $kandidat = $kandidat->where('p.id', Session::get('periode')->id)
+                                            ->get();
+                    } else {
+                        $kandidat = [];
+                    }
+                    return view('siswa.kandidat', compact('kandidat', 'user', 'waktu_voting', 'timeNow'));
                 } else {
-                    $kandidat = [];
+                    Session::flash('error', 'Token sudah digunakan!');
+                    return redirect('siswa/voting/login');
                 }
-                return view('siswa.kandidat', compact('kandidat', 'user', 'waktu_voting', 'timeNow'));
                 // dd(strtotime($waktu_voting->tanggal_mulai. ' ' .$waktu_voting->jam_mulai));
                 // echo time() * 1000;
             } else {
@@ -92,8 +97,40 @@ class VotingController extends Controller
     public function simpan_suara(Request $request)
     {
         if ($request->ajax()) {
-            return 'OKE';
+            $id = $request->id;
+            $token = Session::get('token');
+            $kandidat = DB::table('kandidat')->where('id', $id)->get();
+            $pemilih = DB::table('pemilih')->where('token', $token)->get();
+            foreach ($pemilih as $key => $pe) {
+                $status = $pe->status_id;
+            }
+            if ($status == 1) {
+                foreach ($kandidat as $key => $ka) {
+                    $jumlah_suara = $ka->jumlah_suara;
+                }
+                // Update jumlah suaranya
+                DB::table('kandidat')->where('id', $id)->update([
+                    'jumlah_suara' => $jumlah_suara + 1
+                ]);
+                // Update status tokennya
+                DB::table('pemilih')->where('token', $token)->update([
+                    'status_id' => 2
+                ]);
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Berhasil memilih kandidat!',
+                    'url' => route('sudah_voting')
+                ]);
+            } else {
+                Session::flash('error', 'Token sudah digunakan!');
+                return redirect('siswa/voting/login');
+            }
         }
+    }
+
+    public function selesai_voting()
+    {
+        return view('siswa.selesai');
     }
 
     public function logout_siswa()
