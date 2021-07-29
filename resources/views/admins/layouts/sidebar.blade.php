@@ -72,6 +72,14 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="{{ route('waktu-voting.index') }}" class="nav-link {{ set_active(['waktu-voting.index', 'waktu-voting.create']) }}">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                Waktu Voting
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-table"></i>
               <p>

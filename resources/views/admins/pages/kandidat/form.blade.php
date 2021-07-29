@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <form action="{{ !empty($kandidat) ? route('kandidat.update', @$kandidat->id) : route('kandidat.store') }}" method="POST">
+                <form action="{{ !empty($kandidat) ? route('kandidat.update', @$kandidat->id) : route('kandidat.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @if(!empty($kandidat))
                         @method('PATCH')
@@ -41,27 +41,32 @@
                         <select name="siswa_id" id="siswa" class="form-control">
                             <option value="">-- Pilih --</option>
                             @foreach($siswa as $key => $value)
-                            <option value="{{ $value->id }}" {{ $value->id == @$pemilih->siswa_id ? 'selected' : '' }}>{{ $value->nama }}</option>
+                            <option value="{{ $value->id }}" {{ $value->id == @$kandidat->siswa_id ? 'selected' : '' }}>{{ $value->nama }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="">Visi :</label>
-                        <textarea type="text" id="visi" name="visi" class="form-control" value="{{ !empty($kandidat) ? $kandidat->nama : '' }}"></textarea>
+                        <textarea type="text" id="visi" name="visi" class="form-control">{{ !empty($kandidat) ? $kandidat->visi : '' }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="">Misi :</label>
-                        <textarea type="text" id="misi" name="misi" class="form-control" value="{{ !empty($kandidat) ? $kandidat->nama : '' }}"></textarea>
+                        <textarea type="text" id="misi" name="misi" class="form-control">{{ !empty($kandidat) ? $kandidat->misi : '' }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="">Foto :</label>
-                        <input type="file" name="foto" class="form-control" value="">
+                        <input type="file" name="foto" id="foto" class="form-control" value="">
+                    </div>
+                    <div class="form-group"> 
+                        <img src="{{ !empty($kandidat) ? Storage::url($kandidat->foto) : '' }}" class="text-center" alt="" width="200" height="200">
                     </div>
                     <div class="form-group">
                         <label for="">Pilih Periode :</label>
                         <select name="periode_id" class="form-control" readonly>
-                            <option value="{{ !empty(Session::get('periode')) ? Session::get('periode')->id : 'Belum Set Periode' }}">
-                            {{ !empty(Session::get('periode')) ? Session::get('periode')->nama : 'Belum Set Periode' }}
+                            <option value="
+                            {{ !empty($kandidat) ? $kandidat->periode_id : (!empty(Session::get('periode')) ? Session::get('periode')->id : 'Belum Set Periode') }}
+                            ">
+                            {{ !empty($kandidat) ? $kandidat->nama_periode : (!empty(Session::get('periode')) ? Session::get('periode')->nama : 'Belum Set Periode') }}
                             </option>
                         </select>
                     </div>

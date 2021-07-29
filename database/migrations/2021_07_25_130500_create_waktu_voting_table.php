@@ -15,8 +15,11 @@ class CreateWaktuVotingTable extends Migration
     {
         Schema::create('waktu_voting', function (Blueprint $table) {
             $table->id();
-            $table->datetime('waktu');
             $table->unsignedBigInteger('periode_id');
+            $table->date('tanggal_mulai');
+            $table->time('jam_mulai');
+            $table->date('tanggal_selesai');
+            $table->time('jam_selesai');
             $table->timestamps();
 
             $table->foreign('periode_id')->references('id')->on('periode');

@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class WaktuVoting extends Model
 {
     use HasFactory;
+
+    protected $table = 'waktu_voting';
+
+    public function kandidat()
+    {
+        return $this->hasMany(Kandidat::class);
+    }
 }

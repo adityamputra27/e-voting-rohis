@@ -44,8 +44,8 @@
                                     <option value="">-- PIlih --</option>
                                     @foreach($periode as $key => $value)
                                     <option value="{{ $value->id }}"
-                                        {{ $value->id == Session::get('periode')->id ? 'selected' : '' }}>
-                                        {{ $value->nama }} {{ $value->id == Session::get('periode')->id ? ' - Sedang Aktif' : '' }}
+                                        {{ $value->id == (Session::get('periode')->id ?? []) ? 'selected' : '' }}>
+                                        {{ $value->nama }} {{ $value->id == (Session::get('periode')->id ?? []) ? ' - Sedang Aktif' : '' }}
                                     </option>
                                     @endforeach
                                 </select>
@@ -73,27 +73,7 @@
                 </form>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card card-primary card-outline">
-                <div class="card-body box-profile">
-                    <div class="text-center">
-                    <img class="profile-user-img img-fluid img-circle" src="{{ asset('assets/admins/dist/img/user4-128x128.jpg') }}" alt="User profile picture">
-                    </div>
-                    <h3 class="profile-username text-center">Ihsan Maulana</h3>
-                    <p class="text-muted text-center">XI-TKJ-2</p>
-                    <div class="text-center">
-                        <div class="btn-group">
-                            <a href="#" class="btn btn-primary"><i class="fa fa-edit"></i></a>
-                            <a href="#" class="btn btn-primary bg-purple"><i class="fa fa-eye"></i></a>
-                            <a href="#" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.card-body -->
-                </div>
-            </div>
-        </div>
+        <div class="row" id="kandidat_data"></div>
     </div><!-- /.container-fluid -->
 </section>
 <!-- /.content -->

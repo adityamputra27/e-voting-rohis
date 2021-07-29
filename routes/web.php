@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\PeriodeController;
 use App\Http\Controllers\Admin\SiswaController;
 use App\Http\Controllers\Admin\KelasController;
 use App\Http\Controllers\Admin\KandidatController;
+use App\Http\Controllers\Admin\WaktuVotingController;
 use App\Http\Controllers\VotingController;
 
 /*
@@ -28,13 +29,19 @@ Route::prefix('admin')->group(function () {
     Route::resource('siswa', SiswaController::class);
     Route::resource('kelas', KelasController::class);
     Route::resource('kandidat', KandidatController::class);
+    Route::resource('waktu-voting', WaktuVotingController::class);
     Route::get('periode', [PeriodeController::class, 'index'])->name('periode.index');
     Route::get('periode/{periode}/active', [PeriodeController::class, 'set_active'])->name('periode.setactive');
+    Route::get('get-kandidat', [KandidatController::class, 'get_kandidat'])->name('getkandidat');
 });
 
 Route::prefix('siswa')->group(function () {
     Route::get('/', function () {
         return view('home');
     });
-    Route::get('voting', [VotingController::class, 'index'])->name('mulaivoting');
+    Route::get('voting/login', [VotingController::class, 'index'])->name('mulaivoting');
+    Route::get('voting', [VotingController::class, 'mulai_voting']);
+    Route::post('voting/save/{param}', [VotingController::class, 'simpan_suara'])->name('simpan_suara');
+    Route::post('voting/cek-token', [VotingController::class, 'cektoken'])->name('cektoken');
+    Route::get('voting/logout', [VotingController::class, 'logout_siswa'])->name('logout_siswa');
 });
