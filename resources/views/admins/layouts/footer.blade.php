@@ -216,14 +216,17 @@
     })
 
     // Chart
+
+    let jumlahSuaraKandidatKetua = []
+
     var ctx = document.getElementById('kandidatKetua1').getContext('2d');
-    var myChart = new Chart(ctx, {
+    var chartKandidatKetua1 = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            labels: [],
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                label: 'Jumlah Suara',
+                data: [],
                 backgroundColor: ['#007bff', '#dc3545'],
             }]
         },
@@ -235,6 +238,39 @@
             }
         }
     });
+
+    // Update Chart
+    // Membuat anonymous function
+    let JumlahSuaraKandidatKetua = function () {
+      $.ajax({
+        url: "{{ route('quick-count.get-jumlah-suara-kandidat-ketua') }}",
+        type: "GET",
+        dataType: "json",
+        header: {
+          'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+        },
+        success:function(result) {
+          // console.log(result.data)
+          let labels = result.data.map(function (res) {
+            // return res.nama_siswa + '-' + res.kelas
+            return res.nama_siswa
+          })
+          let jumlahSuaraKandidatKetua = result.data.map(function (res) {
+            return res.jumlah_suara
+          })
+          chartKandidatKetua1.data.labels = labels
+          chartKandidatKetua1.data.datasets[0].data = jumlahSuaraKandidatKetua
+          chartKandidatKetua1.update()
+        }
+      })
+    }
+
+    JumlahSuaraKandidatKetua()
+    // Update realtime
+    setInterval(() => {
+      JumlahSuaraKandidatKetua()
+    }, 3000);
+
     var ctx = document.getElementById('kandidatKetua2').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'pie',
@@ -293,7 +329,6 @@
         }
     });
     // End Chart
-
   })
 
 </script>

@@ -48,9 +48,11 @@ class PemilihController extends Controller
      */
     public function store(Request $request)
     {
+        $periode = DB::table('periode')->where('status', 'active')->first();
+
         $pemilih = new Pemilih;
         $pemilih->siswa_id = $request->siswa_id;
-        $pemilih->periode_id = Session::get('periode')->id;
+        $pemilih->periode_id = $request->periode_id ?? $periode->id;
         $pemilih->status_id = 1;
         
         // Bkin tokennya manual :v

@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-            <h1 class="m-0">Quick Count</h1>
+            <h1 class="m-0">Realtime Quick Count</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -26,6 +26,11 @@
                         <label for="">Pilih Periode : </label>
                         <select name="" id="" class="form-control">
                             <option value="">-- Pilih --</option>
+                            @foreach($periode as $key => $value)
+                            <option value="{{ $value->id }}"
+                            {{ $value->id == @$periode_aktif->id ? 'selected' : '' }}    
+                            >{{ $value->nama }} {{ $value->nama == @$periode_aktif->nama ? '- Sedang Aktif' : '' }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>

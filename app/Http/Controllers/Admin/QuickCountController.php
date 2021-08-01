@@ -4,84 +4,55 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Suuport\Facades\DB;
+use Illuminate\Support\Facades\DB;
 
 class QuickCountController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $data['periode'] = DB::table('periode')->orderBy('nama', 'ASC')->get();
         return view('admins.pages.quick_count.index')->with($data);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function getJumlahSuaraKandidatKetua()
     {
-        //
-    }
+        $periode = DB::table('periode')->where('status', 'active')->first();
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $kandidat = DB::table('kandidat as ka')
+                    ->join('siswa as s', 'ka.siswa_id', '=', 's.id')
+                    ->join('kelas as ke', 's.kelas_id', '=', 'ke.id')
+                    ->join('periode as pe', 'ka.periode_id', '=', 'pe.id')
+                    ->select('s.nama as nama_siswa', 'ka.jumlah_suara as jumlah_suara', 
+                    'ke.nama as nama_kelas', 'pe.nama as nama_periode')
+                    ->where('ka.kategori', 'ketua')
+                    ->where('pe.nama', $periode->nama)
+                    ->orderBy('nama_siswa')
+                    ->get();
+        
+        if (count($kandidat) > 0) {
+            
+            $result = [];
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+            foreach ($kandidat as $key => $value) {
+                $result[] = [
+                    'nama_siswa' => $value->nama_siswa,
+                    'jumlah_suara' => $value->jumlah_suara,
+                    'kelas' => $value->nama_kelas,
+                    'periode' => $value->nama_periode
+                ];
+            }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+            return response()->json([
+                'status' => true,
+                'message' => 'success get jumlah suara kandidat ketua',
+                'data' => $result
+            ]);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        } else {
+            return response()->json([
+                'status' => true,
+                'message' => 'success get jumlah suara kandidat ketua',
+                'data' => []
+            ]);
+        }
     }
 }
