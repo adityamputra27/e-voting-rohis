@@ -67,6 +67,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/29.0.0/classic/ckeditor.js"></script>
 <script src="{{ asset('assets/all/sweetalert/js/sweetalert2.all.min.js') }}"></script>
+<!-- Chart js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js"></script>
 <script>
 
   $(function () {
@@ -152,11 +154,12 @@
 
       let id = $(this).attr('data-id')
       let nama_siswa = $(this).attr('data-nama')
-      let token = "{{ csrf_token() }}";
+      let token = "{{ csrf_token() }}"; 
       let $element = $(this).parent().parent().parent().parent().parent()
 
       Swal.fire({
-        title: 'Yakin hapus kandidat? <br> '+nama_siswa+'?',
+        title: 'Yakin hapus kandidat <br> '+nama_siswa+'?',
+        icon: 'question',
         showDenyButton: true,
         confirmButtonText: `Hapus`,
         denyButtonText: `Batal`,
@@ -178,8 +181,9 @@
                   confirmButtonText: `OK`,
                   icon: 'success',
                 }).then(function () {
-                  $element.fadeOut().remove()    
-                  loadKandidat()            
+                  // $element.remove()    
+                  // loadKandidat()       
+                  location.reload()     
                 })
               }
             },
@@ -210,6 +214,85 @@
       modal.find('#suaraKandidat').text(suara)
       modal.find('#fotoKandidat').attr('src', foto)
     })
+
+    // Chart
+    var ctx = document.getElementById('kandidatKetua1').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: ['#007bff', '#dc3545'],
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    var ctx = document.getElementById('kandidatKetua2').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: ['#007bff', '#dc3545'],
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    var ctx = document.getElementById('kandidatKeputrian1').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: { 
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: ['#007bff', '#dc3545'],
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    var ctx = document.getElementById('kandidatKeputrian2').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: ['#007bff', '#dc3545'],
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    // End Chart
 
   })
 

@@ -5,7 +5,7 @@
         <div class="container">
             <div class="mb-5 mt-5">
                 <h3 class="text-center">Terima Kasih Sudah Memberikan Hak Suara Anda!</h3>
-                <p class="text-center">Periode : {{ Session::get('periode')->nama ?? 'Belum Set Periode'}}</p>
+                <p class="text-center">Periode : {{ $periode_aktif->nama ?? 'Belum Set Periode'}}</p>
             </div>
             <div class="text-center">
                 <img src="{{ asset('assets/users/images/selesai.png') }}" class="img-fluid" alt="" width="500">

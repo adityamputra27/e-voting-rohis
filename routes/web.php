@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\SiswaController;
 use App\Http\Controllers\Admin\KelasController;
 use App\Http\Controllers\Admin\KandidatController;
 use App\Http\Controllers\Admin\WaktuVotingController;
+use App\Http\Controllers\Admin\QuickCountController;
 use App\Http\Controllers\VotingController;
 
 /*
@@ -29,6 +30,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('siswa', SiswaController::class);
     Route::resource('kelas', KelasController::class);
     Route::resource('kandidat', KandidatController::class);
+    Route::resource('quick-count', QuickCountController::class);
     Route::resource('waktu-voting', WaktuVotingController::class);
     Route::get('periode', [PeriodeController::class, 'index'])->name('periode.index');
     Route::get('periode/{periode}/apply', [PeriodeController::class, 'apply'])->name('periode.apply');

@@ -5,7 +5,7 @@
         <div class="container">
             <div class="mb-5 mt-5">
                 <h3 class="text-center">Data Kandidat</h3>
-                <p class="text-center">Periode : {{ Session::get('periode')->nama }}</p>
+                <p class="text-center">Periode : {{ $periode_aktif->nama ?? 'Belum Set Periode' }}</p>
             </div>
             @if($message = Session::get('success'))
             <div class="alert alert-success" role="alert" id="pesan">
@@ -126,6 +126,7 @@
 
         Swal.fire({
             title: 'Anda yakin memilih kandidat '+nama+'?',
+            icon: 'question',
             showDenyButton: true,
             confirmButtonText: `Yakin`,
             denyButtonText: `Batal`,
@@ -148,8 +149,6 @@
                         }
                     }
                 })
-            } else if (result.isDenied) {
-                
             }
         })
     })

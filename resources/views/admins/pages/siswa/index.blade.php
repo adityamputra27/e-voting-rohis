@@ -41,6 +41,8 @@
                             <tr>
                                 <th>No.</th>
                                 <th>Nama</th>
+                                <th>No. WA</th>
+                                <th>Gender</th>
                                 <th>Kelas</th>
                                 <th></th>
                             </tr>
@@ -50,6 +52,10 @@
                             <tr>
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $value->nama }}</td>
+                                <td>
+                                    <span class="badge badge-success">{{ $value->no_telp }}</span>
+                                </td>
+                                <td>{{ $value->jenis_kelamin }}</td>
                                 <td>{{ $value->kelas->nama }}</td>
                                 <td>
                                     <div class="row">

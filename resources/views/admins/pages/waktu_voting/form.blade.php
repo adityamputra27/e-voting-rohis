@@ -46,19 +46,19 @@
                     </div>
                     <div class="form-group">
                         <label for="">Tanggal Mulai :</label>
-                        <input type="date" required name="tanggal_mulai" class="form-control" value="{{ !empty($waktu) ? $waktu->tanggal_mulai : '' }}">
+                        <input type="date" required name="tanggal_mulai" required class="form-control" value="{{ !empty($waktu) ? $waktu->tanggal_mulai : '' }}">
                     </div>
                     <div class="form-group">
                         <label for="">Jam Mulai :</label>
-                        <input type="time" required name="jam_mulai" class="form-control" value="{{ !empty($waktu) ? $waktu->jam_mulai : '' }}">
+                        <input type="time" required name="jam_mulai" required class="form-control" value="{{ !empty($waktu) ? $waktu->jam_mulai : '' }}">
                     </div>
                     <div class="form-group">
                         <label for="">Tanggal Selesai :</label>
-                        <input type="date" required name="tanggal_selesai" class="form-control" value="{{ !empty($waktu) ? $waktu->tanggal_selesai : '' }}">
+                        <input type="date" required name="tanggal_selesai" required class="form-control" value="{{ !empty($waktu) ? $waktu->tanggal_selesai : '' }}">
                     </div>
                     <div class="form-group">
                         <label for="">Jam Selesai :</label>
-                        <input type="time" required name="jam_selesai" class="form-control" value="{{ !empty($waktu) ? $waktu->jam_selesai : '' }}">
+                        <input type="time" required name="jam_selesai" required class="form-control" value="{{ !empty($waktu) ? $waktu->jam_selesai : '' }}">
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-success"><i class="fa fa-check-circle"></i> {{ !empty($waktu) ? 'Update' : 'Simpan' }}</button>

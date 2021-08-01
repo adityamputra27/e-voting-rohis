@@ -44,6 +44,8 @@ class SiswaController extends Controller
         $siswa = new Siswa;
         $siswa->nama = $request->nama;
         $siswa->kelas_id = $request->kelas_id;
+        $siswa->jenis_kelamin = $request->jenis_kelamin;
+        $siswa->no_telp = $request->no_telp;
 
         $kelas = Kelas::find($request->kelas_id);
         $siswa->nama_kelas = $kelas->nama;
@@ -89,6 +91,8 @@ class SiswaController extends Controller
         $siswa = Siswa::find($id);
         $siswa->nama = $request->nama;
         $siswa->kelas_id = $request->kelas_id;
+        $siswa->jenis_kelamin = $request->jenis_kelamin;
+        $siswa->no_telp = $request->no_telp;
 
         $kelas = Kelas::find($request->kelas_id);
         $siswa->nama_kelas = $kelas->nama;
@@ -106,6 +110,10 @@ class SiswaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $siswa = DB::table('siswa')->where('id', $id)->delete();
+        if ($siswa) {
+            Session::flash('success', 'Data Siswa Berhasil Dihapus!');
+            return redirect()->route('siswa.index');
+        }
     }
 }

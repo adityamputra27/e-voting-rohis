@@ -38,16 +38,28 @@
                     @endif
                     <div class="form-group">
                         <label for="">Nama :</label>
-                        <input type="text" class="form-control" name="nama" value="{{ !empty($siswa) ? $siswa->nama : '' }}">
+                        <input type="text" required class="form-control" name="nama" value="{{ !empty($siswa) ? $siswa->nama : '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Jenis Kelamin :</label>
+                        <select name="jenis_kelamin" id="" class="form-control" required>
+                            <option value="">-- Pilih --</option>
+                            <option value="Laki - laki" {{ @$siswa->jenis_kelamin == 'Laki - laki' ? 'selected' : '' }}>Laki - laki</option>
+                            <option value="Perempuan" {{ @$siswa->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="">Pilih Kelas :</label>
-                        <select name="kelas_id" id="kelas" class="form-control">
+                        <select name="kelas_id" id="kelas" class="form-control" required>
                             <option value="">-- Pilih --</option>
                             @foreach($kelas as $key => $value)
                             <option value="{{ $value->id }}" {{ $value->id == @$siswa->kelas_id ? 'selected' : '' }}>{{ $value->nama }}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="">No Whatsapp :</label>
+                        <input type="number" name="no_telp" id="" required class="form-control" value="{{ !empty($siswa) ? $siswa->no_telp : '' }}">
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-success"><i class="fa fa-check-circle"></i> Simpan</button>

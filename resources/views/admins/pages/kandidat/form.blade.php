@@ -38,7 +38,7 @@
                     @endif
                     <div class="form-group">
                         <label for="">Pilih Siswa :</label>
-                        <select name="siswa_id" id="siswa" class="form-control">
+                        <select name="siswa_id" id="siswa" class="form-control" required>
                             <option value="">-- Pilih --</option>
                             @foreach($siswa as $key => $value)
                             <option value="{{ $value->id }}" {{ $value->id == @$kandidat->siswa_id ? 'selected' : '' }}>{{ $value->nama }}</option>
@@ -58,7 +58,17 @@
                         <input type="file" name="foto" id="foto" class="form-control" value="">
                     </div>
                     <div class="form-group"> 
-                        <img src="{{ !empty($kandidat) ? Storage::url($kandidat->foto) : '' }}" class="text-center" alt="" width="200" height="200">
+                        <img src="{{ !empty($kandidat) ? Storage::url($kandidat->foto) : '' }}" required class="text-center" alt="" width="200" height="200">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Kategori : </label>
+                        <select name="kategori" id="" class="form-control" required>
+                            <option value="">-- Pilih --</option>
+                            <option value="ketua"
+                            {{ @$kandidat->kategori == 'ketua' ? 'selected' : '' }}>Kandidat Calon Ketua ROHIS</option>
+                            <option value="keputrian"
+                            {{ @$kandidat->kategori == 'keputrian' ? 'selected' : '' }}>Kandidat Calon Ketua Keputrian</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="">Pilih Periode :</label>

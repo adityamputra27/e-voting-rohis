@@ -38,7 +38,7 @@
                     @endif
                     <div class="form-group">
                         <label for="">Nama :</label>
-                        <input type="text" name="nama" class="form-control" value="{{ !empty($kelas) ? $kelas->nama : '' }}">
+                        <input type="text" name="nama" required class="form-control" value="{{ !empty($kelas) ? $kelas->nama : '' }}">
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-success"><i class="fa fa-check-circle"></i> {{ !empty($kelas) ? 'Update' : 'Simpan' }}</button>

@@ -38,7 +38,7 @@
                     @endif
                     <div class="form-group">
                         <label for="">Pilih Siswa :</label>
-                        <select name="siswa_id" id="siswa" class="form-control">
+                        <select name="siswa_id" id="siswa" class="form-control" required>
                             <option value="">-- Pilih --</option>
                             @foreach($siswa as $key => $value)
                             <option value="{{ $value->id }}" {{ $value->id == @$pemilih->siswa_id ? 'selected' : '' }}>{{ $value->nama }}</option>

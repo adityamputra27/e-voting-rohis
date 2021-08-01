@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Kandidat;
 use Session;
+use Illuminate\Support\Facades\Storage;
 
 class KandidatController extends Controller
 {
@@ -65,9 +66,10 @@ class KandidatController extends Controller
             $kandidat->foto = 'admins/kandidat/default.png';
         }
 
-        $periode = Session::get('periode');
+        $periode = DB::table('periode')->where('status', 'active')->first();
         $kandidat->periode_id = $periode->id;
         $kandidat->jumlah_suara = 0;
+        $kandidat->kategori = $request->kategori;
         $kandidat->save();
 
         Session::flash('success', 'Data Kandidat Berhasil Ditambahkan!');
@@ -82,7 +84,7 @@ class KandidatController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -114,7 +116,31 @@ class KandidatController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $kandidat = Kandidat::find($id);
+        $kandidat->siswa_id = $request->siswa_id;
+        $kandidat->visi = $request->visi;
+        $kandidat->misi = $request->misi;
+
+        if ($request->file('foto')) {
+            // unlink jika ada gambar yg sama
+            if ($kandidat->foto && file_exists(storage_path('app/public/'.$kandidat->foto))) {
+                Storage::delete('public/'.$kandidat->foto);
+            }
+            $foto = $request->file('foto');
+            $store = $foto->store('admins/kandidat', 'public');
+            $kandidat->foto = $store;
+        } else {
+            $kandidat->foto = 'admins/kandidat/default.png';
+        }
+
+        $periode = DB::table('periode')->where('status', 'active')->first();
+        $kandidat->periode_id = $periode->id;
+        $kandidat->jumlah_suara = 0;
+        $kandidat->kategori = $request->kategori;
+        $kandidat->save();
+
+        Session::flash('success', 'Data Kandidat Berhasil Diupdate!');
+        return redirect()->route('kandidat.index');
     }
 
     /**

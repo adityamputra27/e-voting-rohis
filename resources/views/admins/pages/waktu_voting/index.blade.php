@@ -58,11 +58,11 @@
                                 <td>
                                     <div class="row">
                                         <a href="{{ route('waktu-voting.edit', $value->id) }}" class="btn btn-primary"><i class="fa fa-edit"></i></a>
-                                        <form action="{{ route('waktu-voting.destroy', $value->id) }}" method="POST">
+                                        <!-- <form action="{{ route('waktu-voting.destroy', $value->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                                        </form>
+                                        </form> -->
                                     </div>
                                 </td>
                             </tr>

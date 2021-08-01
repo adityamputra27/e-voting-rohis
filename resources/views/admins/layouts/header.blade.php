@@ -40,6 +40,10 @@
     .swal2-title {
       font-weight: 500 !important;
     }
+    canvas {
+      width: 300px;
+      height: 300px;
+    }
   </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
