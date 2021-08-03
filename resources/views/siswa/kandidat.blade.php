@@ -47,7 +47,7 @@
                             <h5 class="pt-1">Hitung Mundur Mulai E-Voting</h5>
                         </div>
                         <div class="card-body">
-                            <h5><span class="text-primary" id="hari"></span> &nbsp; <span class="text-primary" id="jam"></span> &nbsp; <span class="text-primary" id="menit"></span> &nbsp; <span class="text-primary" id="detik"></span></h5>
+                            <h5 class="voting_information"><span class="text-primary" id="hari"></span> &nbsp; <span class="text-primary" id="jam"></span> &nbsp; <span class="text-primary" id="menit"></span> &nbsp; <span class="text-primary" id="detik"></span></h5>
                         </div>
                     </div>
                 </div>
@@ -58,7 +58,6 @@
 @endsection
 @push('scripts')
 <script>
-
 
     function waktuVoting()
     {
@@ -83,9 +82,20 @@
             // Kondisi jika countdown habis
             if (distance < 0) {
                 clearInterval(x)
-                // $(this).parent().parent().parent().remove()
-                $('.waktu_voting').fadeOut().remove()
-                $('.kandidat').removeClass('hide');
+                let dateNow = "{{ date('Y-m-d') }}"
+                let timeNow = "{{ date('H:i:s') }}"
+                let dateEnd = "{{ $waktu_voting->tanggal_selesai }}"
+                let timeEnd = "{{ $waktu_voting->jam_selesai }}"
+                // console.log(dateNow +' - '+ dateEnd +' | '+ timeNow +' - '+timeEnd)
+                if (dateNow >= dateEnd && timeNow >= timeEnd) {
+                    // $(this).parent().parent().parent().remove()
+                    $('.waktu_voting').fadeIn().show()
+                    $('.kandidat').addClass('hide');
+                    $('.voting_information').html('<span class="text-danger">Waktu Voting Sudah Selesai! Silahkan logout kembali!</span>')
+                } else {
+                    $('.waktu_voting').fadeOut().remove()
+                    $('.kandidat').removeClass('hide');
+                }
             } else {
                 $('.waktu_voting').fadeIn().show()
                 $('.kandidat').addClass('hide');

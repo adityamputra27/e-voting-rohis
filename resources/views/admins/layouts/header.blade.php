@@ -75,11 +75,14 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" role="button">
+        <a class="nav-link" role="button" href="#" onclick="event.preventDefault(); document.getElementById('logout').submit();">
           <i class="fas fa-sign-out-alt"></i>
         </a>
       </li>
     </ul>
   </nav>
+  <form id="logout" action="{{ route('logout') }}" method="POST" style="display: none;">
+      @csrf
+  </form>
   <!-- /.navbar -->
   @include('admins.layouts.sidebar')

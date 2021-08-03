@@ -44,9 +44,7 @@ class QuickCount extends Model
                     'periode' => $value->nama_periode
                 ];
             }
-
             return Response::success($result, 'success get jumlah suara kandidat '.$kategori);
-
         } else {
             return Response::error('success get jumlah suara kandidat '.$kategori);
 
@@ -70,9 +68,7 @@ class QuickCount extends Model
                     'presentase' => (int)($value->jumlah_suara / $countDataPemilih * 100)
                 ];
             }
-
             return Response::success($result, 'success get presentase kandidat '.$kategori);
-
         } else {
             return Response::error('success get presentase kandidat '.$kategori);
 
