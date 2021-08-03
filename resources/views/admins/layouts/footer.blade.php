@@ -389,37 +389,13 @@
 
     // Update Chart
     // Membuat anonymous function
-    let jumlahSuaraKandidatKeputrian = function () {
-      $.ajax({
-        url: "{{ route('quick-count.get-jumlah-suara-kandidat-keputrian') }}",
-        type: "GET",
-        dataType: "json",
-        header: {
-          'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
-        },
-        success:function(result) {
-          // console.log(result.data)
-          let labels = result.data.map(function (res) {
-            // return res.nama_siswa + '-' + res.kelas
-            return res.nama_siswa
-          })
-          let jumlahSuaraKandidatKeputrian = result.data.map(function (res) {
-            return res.jumlah_suara
-          })
-          chartKandidatKeputrian1.data.labels = labels
-          chartKandidatKeputrian1.data.datasets[0].data = jumlahSuaraKandidatKeputrian
-          chartKandidatKeputrian1.update()
-        }
-      })
-    }
-
-    jumlahSuaraKandidatKeputrian()
+    
 
     // Update realtime
     setInterval(() => {
       jumlahSuaraKandidatKetua()
       presentaseKandidatKetua()
-      jumlahSuaraKandidatKeputrian()
+      // jumlahSuaraKandidatKeputrian()
     }, 3000);
 
   })

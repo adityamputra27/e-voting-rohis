@@ -5,33 +5,24 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\QuickCount;
 
 class QuickCountController extends Controller
 {
+    private $periode_aktif;
+    public function __construct()
+    {
+        $this->periode_aktif = DB::table('periode')->where('status', 'active')->first();
+    }
     public function index()
     {
         $data['periode'] = DB::table('periode')->orderBy('nama', 'ASC')->get();
         return view('admins.pages.quick_count.index')->with($data);
     }
-    private function queryKandidat($kategori)
-    {
-        $periode = DB::table('periode')->where('status', 'active')->first();
-
-        $data = DB::table('kandidat as ka')
-                    ->join('siswa as s', 'ka.siswa_id', '=', 's.id')
-                    ->join('kelas as ke', 's.kelas_id', '=', 'ke.id')
-                    ->join('periode as pe', 'ka.periode_id', '=', 'pe.id')
-                    ->select('s.nama as nama_siswa', 'ka.jumlah_suara as jumlah_suara', 
-                    'ke.nama as nama_kelas', 'pe.nama as nama_periode')
-                    ->where('ka.kategori', $kategori)
-                    ->where('pe.nama', $periode->nama)
-                    ->orderBy('nama_siswa')
-                    ->get();
-
-        
-    }
     public function getJumlahSuaraKandidatKetua()
     {   
+        $kandidat = QuickCount::setKandidatQuery('ketua', $this->periode_aktif->nama);
+
         if (count($kandidat) > 0) {
             
             $result = [];
@@ -61,18 +52,7 @@ class QuickCountController extends Controller
     }
     public function getPresentaseKandidatKetua()
     {
-        $periode = DB::table('periode')->where('status', 'active')->first();
-
-        $kandidat = DB::table('kandidat as ka')
-                    ->join('siswa as s', 'ka.siswa_id', '=', 's.id')
-                    ->join('kelas as ke', 's.kelas_id', '=', 'ke.id')
-                    ->join('periode as pe', 'ka.periode_id', '=', 'pe.id')
-                    ->select('s.nama as nama_siswa','ke.nama as nama_kelas', 
-                    'pe.nama as nama_periode', 'ka.jumlah_suara as jumlah_suara')
-                    ->where('ka.kategori', 'ketua')
-                    ->where('pe.nama', $periode->nama)
-                    ->orderBy('nama_siswa')
-                    ->get();
+        $kandidat = QuickCount::setKandidatQuery('ketua', $this->periode_aktif->nama);
         
         if (count($kandidat) > 0) {
             
