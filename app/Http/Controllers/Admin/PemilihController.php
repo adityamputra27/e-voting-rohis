@@ -22,7 +22,8 @@ class PemilihController extends Controller
                             ->join('siswa', 'pemilih.siswa_id', '=', 'siswa.id')
                             ->join('periode', 'pemilih.periode_id', '=', 'periode.id')
                             ->join('status', 'pemilih.status_id', '=', 'status.id')
-                            ->select('pemilih.*', 'siswa.nama as nama_siswa', 'siswa.nama_kelas as kelas', 'periode.nama as periode', 'status.nama as status')
+                            ->select('pemilih.*', 'siswa.nama as nama_siswa', 'siswa.no_telp as no_telp',
+                            'siswa.nama_kelas as kelas', 'periode.nama as periode', 'status.nama as status')
                             ->get();
         return view('admins.pages.pemilih.index')->with($data);
         // dd($data);

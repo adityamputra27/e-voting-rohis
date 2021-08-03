@@ -32,6 +32,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('kandidat', KandidatController::class);
     Route::get('quick-count', [QuickCountController::class, 'index'])->name('quick-count.index');
     Route::get('quick-count/get-jumlah-suara-kandidat-ketua', [QuickCountController::class, 'getJumlahSuaraKandidatKetua'])->name('quick-count.get-jumlah-suara-kandidat-ketua');
+    Route::get('quick-count/get-presentase-kandidat-ketua', [QuickCountController::class, 'getPresentaseKandidatKetua'])->name('quick-count.get-presentase-kandidat-ketua');
     Route::resource('waktu-voting', WaktuVotingController::class);
     Route::get('periode', [PeriodeController::class, 'index'])->name('periode.index');
     Route::get('periode/{periode}/apply', [PeriodeController::class, 'apply'])->name('periode.apply');

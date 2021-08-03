@@ -68,7 +68,9 @@
 <script src="https://cdn.ckeditor.com/ckeditor5/29.0.0/classic/ckeditor.js"></script>
 <script src="{{ asset('assets/all/sweetalert/js/sweetalert2.all.min.js') }}"></script>
 <!-- Chart js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0/chartjs-plugin-datalabels.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script>
 
   $(function () {
@@ -217,8 +219,6 @@
 
     // Chart
 
-    let jumlahSuaraKandidatKetua = []
-
     var ctx = document.getElementById('kandidatKetua1').getContext('2d');
     var chartKandidatKetua1 = new Chart(ctx, {
         type: 'bar',
@@ -227,7 +227,101 @@
             datasets: [{
                 label: 'Jumlah Suara',
                 data: [],
-                backgroundColor: ['#007bff', '#dc3545'],
+                backgroundColor: [
+                  'rgb(255, 99, 132)',
+                  'rgb(54, 162, 235)',
+                  'rgb(255, 205, 86)'
+                ],
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+    var ctx = document.getElementById('kandidatKetua2').getContext('2d');
+    var chartKandidatKetua2 = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Presentase Suara (%)',
+                data: [],
+                backgroundColor: [
+                  'rgb(255, 99, 132)',
+                  'rgb(54, 162, 235)',
+                  'rgb(255, 205, 86)'
+                ],
+            }]
+        },
+        options: {
+            scaleShowVerticalLines: false,
+            responsive: true,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true,
+                    }
+                }]
+            },
+            tooltips: {
+            enabled: true,
+            callbacks: {
+              label: function(tooltipItem, data) {
+                var label = data.labels[tooltipItem.index];
+                var val = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                return label + ': ' + '(' + val + '%)';
+              }
+            }
+          }
+        }
+    });
+    var ctx = document.getElementById('kandidatKeputrian1').getContext('2d');
+    var chartKandidatKeputrian1 = new Chart(ctx, {
+        type: 'bar',
+        data: { 
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                  'rgb(255, 99, 132)',
+                  'rgb(54, 162, 235)',
+                  'rgb(255, 205, 86)'
+                ],
+            }]
+        },
+        options: {
+          scaleShowVerticalLines: false,
+          responsive: true,
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero:true,
+                  }
+              }]
+          }
+        }
+    });
+    var ctx = document.getElementById('kandidatKeputrian2').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                  'rgb(255, 99, 132)',
+                  'rgb(54, 162, 235)',
+                  'rgb(255, 205, 86)'
+                ],
             }]
         },
         options: {
@@ -238,10 +332,11 @@
             }
         }
     });
+    // End Chart
 
     // Update Chart
     // Membuat anonymous function
-    let JumlahSuaraKandidatKetua = function () {
+    let jumlahSuaraKandidatKetua = function () {
       $.ajax({
         url: "{{ route('quick-count.get-jumlah-suara-kandidat-ketua') }}",
         type: "GET",
@@ -265,70 +360,68 @@
       })
     }
 
-    JumlahSuaraKandidatKetua()
+    jumlahSuaraKandidatKetua()
+
+    let presentaseKandidatKetua = function () {
+      $.ajax({
+        url: "{{ route('quick-count.get-presentase-kandidat-ketua') }}",
+        type: "GET",
+        dataType: "json",
+        header: {
+          'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+        },
+        success:function(result) {
+          // console.log(result.data.map(e => e))
+          let labels = result.data.map(function (res) {
+            // return res.nama_siswa + '-' + res.kelas
+            return res.nama_siswa + '-' + res.kelas
+          })
+          let presentase = result.data.map(res => res.presentase)
+          chartKandidatKetua2.data.labels = labels
+          chartKandidatKetua2.data.datasets[0].data = presentase
+          chartKandidatKetua2.update()
+          // console.log(labels + ' - ' + presentaseKandidatKetua)
+        }
+      })
+    }
+
+    presentaseKandidatKetua()
+
+    // Update Chart
+    // Membuat anonymous function
+    let jumlahSuaraKandidatKeputrian = function () {
+      $.ajax({
+        url: "{{ route('quick-count.get-jumlah-suara-kandidat-keputrian') }}",
+        type: "GET",
+        dataType: "json",
+        header: {
+          'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+        },
+        success:function(result) {
+          // console.log(result.data)
+          let labels = result.data.map(function (res) {
+            // return res.nama_siswa + '-' + res.kelas
+            return res.nama_siswa
+          })
+          let jumlahSuaraKandidatKeputrian = result.data.map(function (res) {
+            return res.jumlah_suara
+          })
+          chartKandidatKeputrian1.data.labels = labels
+          chartKandidatKeputrian1.data.datasets[0].data = jumlahSuaraKandidatKeputrian
+          chartKandidatKeputrian1.update()
+        }
+      })
+    }
+
+    jumlahSuaraKandidatKeputrian()
+
     // Update realtime
     setInterval(() => {
-      JumlahSuaraKandidatKetua()
+      jumlahSuaraKandidatKetua()
+      presentaseKandidatKetua()
+      jumlahSuaraKandidatKeputrian()
     }, 3000);
 
-    var ctx = document.getElementById('kandidatKetua2').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: ['#007bff', '#dc3545'],
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-    var ctx = document.getElementById('kandidatKeputrian1').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: { 
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: ['#007bff', '#dc3545'],
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-    var ctx = document.getElementById('kandidatKeputrian2').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: ['#007bff', '#dc3545'],
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-    // End Chart
   })
 
 </script>

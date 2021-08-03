@@ -41,11 +41,13 @@ class SiswaController extends Controller
      */
     public function store(Request $request)
     {
+        // $no_telp = '62'.substr($request->no_telp, 1);
+        // dd($no_telp);
         $siswa = new Siswa;
         $siswa->nama = $request->nama;
         $siswa->kelas_id = $request->kelas_id;
         $siswa->jenis_kelamin = $request->jenis_kelamin;
-        $siswa->no_telp = $request->no_telp;
+        $siswa->no_telp = '62'.substr($request->no_telp, 1);
 
         $kelas = Kelas::find($request->kelas_id);
         $siswa->nama_kelas = $kelas->nama;
