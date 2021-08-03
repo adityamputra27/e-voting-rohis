@@ -21,97 +21,18 @@ class QuickCountController extends Controller
     }
     public function getJumlahSuaraKandidatKetua()
     {   
-        $kandidat = QuickCount::setKandidatQuery('ketua', $this->periode_aktif->nama);
-
-        if (count($kandidat) > 0) {
-            
-            $result = [];
-
-            foreach ($kandidat as $key => $value) {
-                $result[] = [
-                    'nama_siswa' => $value->nama_siswa,
-                    'jumlah_suara' => $value->jumlah_suara,
-                    'kelas' => $value->nama_kelas,
-                    'periode' => $value->nama_periode
-                ];
-            }
-
-            return response()->json([
-                'status' => true,
-                'message' => 'success get jumlah suara kandidat ketua',
-                'data' => $result
-            ]);
-
-        } else {
-            return response()->json([
-                'status' => true,
-                'message' => 'success get jumlah suara kandidat ketua',
-                'data' => []
-            ]);
-        }
+        return QuickCount::getJumlahSuara('ketua', $this->periode_aktif->nama);
     }
     public function getPresentaseKandidatKetua()
     {
-        $kandidat = QuickCount::setKandidatQuery('ketua', $this->periode_aktif->nama);
-        
-        if (count($kandidat) > 0) {
-            
-            $result = [];
-            $countDataPemilih = DB::table('pemilih')->where('status_id', '2')->count();
-
-            foreach ($kandidat as $key => $value) {
-                $result[] = [
-                    'nama_siswa' => $value->nama_siswa,
-                    'jumlah_suara' => $value->jumlah_suara,
-                    'kelas' => $value->nama_kelas,
-                    'periode' => $value->nama_periode,
-                    'presentase' => (int)($value->jumlah_suara / $countDataPemilih * 100)
-                ];
-            }
-
-            return response()->json([
-                'status' => true,
-                'message' => 'success get presentase kandidat ketua',
-                'data' => $result
-            ]);
-
-        } else {
-            return response()->json([
-                'status' => true,
-                'message' => 'success get presentase kandidat ketua',
-                'data' => []
-            ]);
-        }
+        return QuickCount::getPresentase('ketua', $this->periode_aktif->nama);
     }
     public function getJumlahSuaraKandidatKeputrian()
     {   
-        $kandidat = QuickCount::setKandidatQuery('keputrian', $this->periode_aktif->nama);
-
-        if (count($kandidat) > 0) {
-            
-            $result = [];
-
-            foreach ($kandidat as $key => $value) {
-                $result[] = [
-                    'nama_siswa' => $value->nama_siswa,
-                    'jumlah_suara' => $value->jumlah_suara,
-                    'kelas' => $value->nama_kelas,
-                    'periode' => $value->nama_periode
-                ];
-            }
-
-            return response()->json([
-                'status' => true,
-                'message' => 'success get jumlah suara kandidat keputrian',
-                'data' => $result
-            ]);
-
-        } else {
-            return response()->json([
-                'status' => true,
-                'message' => 'success get jumlah suara kandidat keputrian',
-                'data' => []
-            ]);
-        }
+        return QuickCount::getJumlahSuara('keputrian', $this->periode_aktif->nama);
+    }
+    public function getPresentaseKandidatKeputrian()
+    {
+        return QuickCount::getPresentase('keputrian', $this->periode_aktif->nama);
     }
 }

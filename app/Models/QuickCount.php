@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use App\Services\Response;
 
 class QuickCount extends Model
 {
@@ -26,5 +27,55 @@ class QuickCount extends Model
             return [];
         }
         return $data;
+    }
+    protected function getJumlahSuara($kategori, $periode)
+    {
+        $kandidat = self::setKandidatQuery($kategori, $periode);
+
+        if (count($kandidat) > 0) {
+            
+            $result = [];
+
+            foreach ($kandidat as $key => $value) {
+                $result[] = [
+                    'nama_siswa' => $value->nama_siswa,
+                    'jumlah_suara' => $value->jumlah_suara,
+                    'kelas' => $value->nama_kelas,
+                    'periode' => $value->nama_periode
+                ];
+            }
+
+            return Response::success($result, 'success get jumlah suara kandidat '.$kategori);
+
+        } else {
+            return Response::error('success get jumlah suara kandidat '.$kategori);
+
+        }
+    }
+    protected function getPresentase($kategori, $periode)
+    {
+        $kandidat = self::setKandidatQuery($kategori, $periode);
+
+        if (count($kandidat) > 0) {
+            
+            $result = [];
+            $countDataPemilih = DB::table('pemilih')->where('status_id', '2')->count();
+
+            foreach ($kandidat as $key => $value) {
+                $result[] = [
+                    'nama_siswa' => $value->nama_siswa,
+                    'jumlah_suara' => $value->jumlah_suara,
+                    'kelas' => $value->nama_kelas,
+                    'periode' => $value->nama_periode,
+                    'presentase' => (int)($value->jumlah_suara / $countDataPemilih * 100)
+                ];
+            }
+
+            return Response::success($result, 'success get presentase kandidat '.$kategori);
+
+        } else {
+            return Response::error('success get presentase kandidat '.$kategori);
+
+        }
     }
 }

@@ -286,10 +286,10 @@
     var chartKandidatKeputrian1 = new Chart(ctx, {
         type: 'bar',
         data: { 
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            labels: [],
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                label: 'Jumlah Suara',
+                data: [],
                 backgroundColor: [
                   'rgb(255, 99, 132)',
                   'rgb(54, 162, 235)',
@@ -310,13 +310,13 @@
         }
     });
     var ctx = document.getElementById('kandidatKeputrian2').getContext('2d');
-    var myChart = new Chart(ctx, {
+    var chartKandidatKeputrian2 = new Chart(ctx, {
         type: 'pie',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            labels: [],
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                label: 'Presentase Suara (%)',
+                data: [],
                 backgroundColor: [
                   'rgb(255, 99, 132)',
                   'rgb(54, 162, 235)',
@@ -325,11 +325,25 @@
             }]
         },
         options: {
+            scaleShowVerticalLines: false,
+            responsive: true,
             scales: {
-                y: {
-                    beginAtZero: true
-                }
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true,
+                    }
+                }]
+            },
+            tooltips: {
+            enabled: true,
+            callbacks: {
+              label: function(tooltipItem, data) {
+                var label = data.labels[tooltipItem.index];
+                var val = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                return label + ': ' + '(' + val + '%)';
+              }
             }
+          }
         }
     });
     // End Chart
@@ -389,13 +403,62 @@
 
     // Update Chart
     // Membuat anonymous function
-    
+    let jumlahSuaraKandidatKeputrian = function () {
+      $.ajax({
+        url: "{{ route('quick-count.get-jumlah-suara-kandidat-keputrian') }}",
+        type: "GET",
+        dataType: "json",
+        header: {
+          'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+        },
+        success:function(result) {
+          // console.log(result.data)
+          let labels = result.data.map(function (res) {
+            // return res.nama_siswa + '-' + res.kelas
+            return res.nama_siswa
+          })
+          let jumlahSuaraKandidatKeputrian = result.data.map(function (res) {
+            return res.jumlah_suara
+          })
+          chartKandidatKeputrian1.data.labels = labels
+          chartKandidatKeputrian1.data.datasets[0].data = jumlahSuaraKandidatKeputrian
+          chartKandidatKeputrian1.update()
+        }
+      })
+    }
+
+    jumlahSuaraKandidatKeputrian()
+
+    let presentaseKandidatKeputrian = function () {
+      $.ajax({
+        url: "{{ route('quick-count.get-presentase-kandidat-keputrian') }}",
+        type: "GET",
+        dataType: "json",
+        header: {
+          'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+        },
+        success:function(result) {
+          // console.log(result.data.map(e => e))
+          let labels = result.data.map(function (res) {
+            // return res.nama_siswa + '-' + res.kelas
+            return res.nama_siswa + '-' + res.kelas
+          })
+          let presentase = result.data.map(res => res.presentase)
+          chartKandidatKeputrian2.data.labels = labels
+          chartKandidatKeputrian2.data.datasets[0].data = presentase
+          chartKandidatKeputrian2.update()
+          // console.log(labels + ' - ' + presentaseKandidatKeputrian)
+        }
+      })
+    }
+
+    presentaseKandidatKeputrian()
 
     // Update realtime
     setInterval(() => {
       jumlahSuaraKandidatKetua()
       presentaseKandidatKetua()
-      // jumlahSuaraKandidatKeputrian()
+      jumlahSuaraKandidatKeputrian()
     }, 3000);
 
   })
