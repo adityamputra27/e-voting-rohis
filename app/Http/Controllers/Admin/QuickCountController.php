@@ -83,4 +83,35 @@ class QuickCountController extends Controller
             ]);
         }
     }
+    public function getJumlahSuaraKandidatKeputrian()
+    {   
+        $kandidat = QuickCount::setKandidatQuery('keputrian', $this->periode_aktif->nama);
+
+        if (count($kandidat) > 0) {
+            
+            $result = [];
+
+            foreach ($kandidat as $key => $value) {
+                $result[] = [
+                    'nama_siswa' => $value->nama_siswa,
+                    'jumlah_suara' => $value->jumlah_suara,
+                    'kelas' => $value->nama_kelas,
+                    'periode' => $value->nama_periode
+                ];
+            }
+
+            return response()->json([
+                'status' => true,
+                'message' => 'success get jumlah suara kandidat keputrian',
+                'data' => $result
+            ]);
+
+        } else {
+            return response()->json([
+                'status' => true,
+                'message' => 'success get jumlah suara kandidat keputrian',
+                'data' => []
+            ]);
+        }
+    }
 }
