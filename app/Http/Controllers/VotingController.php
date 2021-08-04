@@ -35,6 +35,7 @@ class VotingController extends Controller
                     // ->get();
         
         if (!empty(Session::get('token'))) {
+
             if (!empty($this->periode->id)) {
 
                 $user = DB::table('pemilih')
@@ -71,6 +72,7 @@ class VotingController extends Controller
                 Session::flash('error', 'Periode belum di set, harap hubungi admin!');
                 return redirect('siswa/voting/login');
             }
+            
         } else {
             Session::flash('error', 'Mohon masukkan token untuk akses!');
             return redirect('siswa/voting/login');
@@ -113,6 +115,7 @@ class VotingController extends Controller
     public function simpan_suara(Request $request)
     {
         if ($request->ajax()) {
+
             $id = $request->id;
             $token = Session::get('token');
             $kandidat = DB::table('kandidat')->where('id', $id)->get();
@@ -122,9 +125,11 @@ class VotingController extends Controller
             $dateEnd = $waktu->tanggal_selesai;
             $timeNow = date('H:i:s');
             $timeEnd = $waktu->jam_selesai;
+
             foreach ($pemilih as $key => $pe) {
                 $status = $pe->status_id;
             }
+
             if ($status == 1) {
                 if ($dateNow >= $dateEnd) {
                     if ($timeNow >= $timeEnd) {
