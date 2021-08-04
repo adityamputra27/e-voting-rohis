@@ -41,18 +41,20 @@ Route::middleware(['auth'])->group(function () {
         Route::get('periode/{periode}/apply', [PeriodeController::class, 'apply'])->name('periode.apply');
         Route::get('get-kandidat', [KandidatController::class, 'get_kandidat'])->name('getkandidat');
     });
-    
-    Route::prefix('siswa')->group(function () {
-        Route::get('/', function () {
-            return view('home');
-        });
-        Route::get('voting/login', [VotingController::class, 'index'])->name('mulaivoting');
-        Route::get('voting', [VotingController::class, 'mulai_voting']);
-        Route::post('voting/save/{param}', [VotingController::class, 'simpan_suara'])->name('simpan_suara');
-        Route::post('voting/cek-token', [VotingController::class, 'cektoken'])->name('cektoken');
-        Route::get('voting/logout', [VotingController::class, 'logout_siswa'])->name('logout_siswa');
-        Route::get('/voting/selesai', [VotingController::class, 'selesai_voting'])->name('sudah_voting');
+});
+
+Route::get('/', [VotingController::class, 'home'])->name('home.voting');
+
+Route::prefix('siswa')->group(function () {
+    Route::get('/', function () {
+        return view('home');
     });
+    Route::get('voting/login', [VotingController::class, 'index'])->name('mulaivoting');
+    Route::get('voting', [VotingController::class, 'mulai_voting']);
+    Route::post('voting/save/{param}', [VotingController::class, 'simpan_suara'])->name('simpan_suara');
+    Route::post('voting/cek-token', [VotingController::class, 'cektoken'])->name('cektoken');
+    Route::get('voting/logout', [VotingController::class, 'logout_siswa'])->name('logout_siswa');
+    Route::get('/voting/selesai', [VotingController::class, 'selesai_voting'])->name('sudah_voting');
 });
 
 Route::get('admin/login', [AuthController::class, 'login'])->name('login');

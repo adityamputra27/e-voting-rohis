@@ -89,6 +89,7 @@
                 // console.log(dateNow +' - '+ dateEnd +' | '+ timeNow +' - '+timeEnd)
                 if (dateNow >= dateEnd && timeNow >= timeEnd) {
                     // $(this).parent().parent().parent().remove()
+                    // location.reload();
                     $('.waktu_voting').fadeIn().show()
                     $('.kandidat').addClass('hide');
                     $('.voting_information').html('<span class="text-danger">Waktu Voting Sudah Selesai! Silahkan logout kembali!</span>')
@@ -156,6 +157,14 @@
                             // setTimeout(() => {
                                 window.location.href = data.url
                             // }, 1000);
+                        } else {
+                            Swal.fire({
+                                'icon': 'error',
+                                'title': data.message,
+                                'showConfirmButton': true,
+                            }).then(function () {
+                                window.location.href = data.url
+                            })
                         }
                     }
                 })

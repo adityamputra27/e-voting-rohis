@@ -15,9 +15,13 @@ class VotingController extends Controller
     {
         $this->periode = DB::table('periode')->where('status', 'active')->first();
     }
-
+    public function home()
+    {
+        return redirect('siswa');
+    }
     public function index()
     {
+        // dd(now());
         return view('siswa.voting');
     }
     public function mulai_voting()
@@ -113,10 +117,25 @@ class VotingController extends Controller
             $token = Session::get('token');
             $kandidat = DB::table('kandidat')->where('id', $id)->get();
             $pemilih = DB::table('pemilih')->where('token', $token)->get();
+            $waktu = DB::table('waktu_voting')->where('periode_id', $this->periode->id)->first();
+            $dateNow = date('Y-m-d');
+            $dateEnd = $waktu->tanggal_selesai;
+            $timeNow = date('H:i:s');
+            $timeEnd = $waktu->jam_selesai;
             foreach ($pemilih as $key => $pe) {
                 $status = $pe->status_id;
             }
             if ($status == 1) {
+                if ($dateNow >= $dateEnd) {
+                    if ($timeNow >= $timeEnd) {
+                        return response()->json([
+                            'status' => false,
+                            'message' => 'Waktu Voting Sudah Selesai! Anda Tidak Bisa Voting!',
+                            'code' => 500,
+                            'url' => route('logout_siswa')
+                        ]);
+                    }
+                }
                 foreach ($kandidat as $key => $ka) {
                     $jumlah_suara = $ka->jumlah_suara;
                 }

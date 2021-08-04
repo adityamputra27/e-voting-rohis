@@ -1,5 +1,6 @@
 @extends('siswa.layouts.header')
 @section('content_siswa')
+
     <!-- {{-- sectionhero --}} -->
     <section id="hero" class="">
         <div class="container">
