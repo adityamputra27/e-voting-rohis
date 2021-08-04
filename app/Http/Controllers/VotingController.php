@@ -10,10 +10,14 @@ use Session;
 class VotingController extends Controller
 {
     private $periode;
+    private $dateNow;
+    private $timeNow;
 
     public function __construct()
     {
         $this->periode = DB::table('periode')->where('status', 'active')->first();
+        $this->dateNow = date('Y-m-d');
+        $this->timeNow = date('H:i:s');
     }
     public function home()
     {
@@ -72,7 +76,7 @@ class VotingController extends Controller
                 Session::flash('error', 'Periode belum di set, harap hubungi admin!');
                 return redirect('siswa/voting/login');
             }
-            
+
         } else {
             Session::flash('error', 'Mohon masukkan token untuk akses!');
             return redirect('siswa/voting/login');
@@ -121,9 +125,7 @@ class VotingController extends Controller
             $kandidat = DB::table('kandidat')->where('id', $id)->get();
             $pemilih = DB::table('pemilih')->where('token', $token)->get();
             $waktu = DB::table('waktu_voting')->where('periode_id', $this->periode->id)->first();
-            $dateNow = date('Y-m-d');
             $dateEnd = $waktu->tanggal_selesai;
-            $timeNow = date('H:i:s');
             $timeEnd = $waktu->jam_selesai;
 
             foreach ($pemilih as $key => $pe) {
@@ -131,8 +133,8 @@ class VotingController extends Controller
             }
 
             if ($status == 1) {
-                if ($dateNow >= $dateEnd) {
-                    if ($timeNow >= $timeEnd) {
+                if ($this->dateNow >= $dateEnd) {
+                    if ($this->timeNow >= $timeEnd) {
                         return response()->json([
                             'status' => false,
                             'message' => 'Waktu Voting Sudah Selesai! Anda Tidak Bisa Voting!',
