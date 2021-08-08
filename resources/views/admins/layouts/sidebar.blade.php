@@ -33,7 +33,7 @@
           </li>
           <li class="nav-item">
             <a href="{{ route('pemilih.index') }}" class="nav-link {{ set_active(['pemilih.index', 'pemilih.create']) }}">
-              <i class="nav-icon fas fa-table"></i>
+              <i class="nav-icon fa fa-users"></i>
               <p>
                 Pemilih
               </p>
@@ -41,7 +41,7 @@
           </li>
           <li class="nav-item">
             <a href="{{ route('kandidat.index') }}" class="nav-link {{ set_active(['kandidat.index', 'kandidat.create']) }}">
-              <i class="nav-icon fas fa-table"></i>
+              <i class="nav-icon fa fa-user-tie"></i>
               <p>
                 Kandidat
               </p>
@@ -49,7 +49,7 @@
           </li>
           <li class="nav-item">
             <a href="{{ route('kelas.index') }}" class="nav-link {{ set_active(['kelas.index', 'kelas.create']) }}">
-              <i class="nav-icon fas fa-table"></i>
+              <i class="nav-icon fa fa-building"></i>
               <p>
                 Kelas
               </p>
@@ -57,7 +57,7 @@
           </li>
           <li class="nav-item">
             <a href="{{ route('siswa.index') }}" class="nav-link {{ set_active(['siswa.index', 'siswa.create']) }}">
-              <i class="nav-icon fas fa-table"></i>
+              <i class="nav-icon fa fa-user-friends"></i>
               <p>
                 Siswa
               </p>
@@ -65,7 +65,7 @@
           </li>
           <li class="nav-item">
             <a href="{{ route('periode.index') }}" class="nav-link {{ set_active(['periode.index', 'periode.create']) }}">
-              <i class="nav-icon fas fa-table"></i>
+              <i class="nav-icon fa fa-calendar"></i>
               <p>
                 Periode
               </p>
@@ -73,7 +73,7 @@
           </li>
           <li class="nav-item">
             <a href="{{ route('waktu-voting.index') }}" class="nav-link {{ set_active(['waktu-voting.index', 'waktu-voting.create']) }}">
-              <i class="nav-icon fas fa-table"></i>
+              <i class="nav-icon fa fa-clock"></i>
               <p>
                 Waktu Voting
               </p>
@@ -81,7 +81,7 @@
           </li>
           <li class="nav-item">
             <a href="{{ route('quick-count.index') }}" class="nav-link {{ set_active('quick-count.index') }">
-              <i class="nav-icon fas fa-table"></i>
+              <i class="nav-icon fa fa-chart-pie"></i>
               <p>
                 Quick Count
               </p>
@@ -103,6 +103,12 @@
                 Edit Profile
               </p>
             </a>
+          </li>
+          <li class="nav-item" href="#" onclick="event.preventDefault(); document.getElementById('logout').submit();">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>Logout</p>
+          </a>
           </li>
         </ul>
       </nav>
