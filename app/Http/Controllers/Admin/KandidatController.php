@@ -19,19 +19,9 @@ class KandidatController extends Controller
     public function index()
     {
         $periode = DB::table('periode')->orderBy('nama', 'ASC')->get();
-        // $kandidat = DB::table('kandidat as ka')
-        //                 ->join('siswa as s', 'ka.siswa_id', '=', 's.id')
-        //                 ->join('kelas as k', 's.kelas_id', '=', 'k.id')
-        //                 ->join('periode as p', 'ka.periode_id', '=', 'p.id')
-        //                 ->select('s.nama as nama_siswa', 'ka.*', 'k.nama as nama_kelas', 'p.nama as nama_periode')
-        //                 ->orderBy('k.created_at', 'DESC')
-        //                 ->where('p.nama', Session::get('periode')->nama)
-        //                 ->get();
         return view('admins.pages.kandidat.index', [
             'periode' => $periode,
-            // 'kandidat' => $kandidat
         ]);
-        // dd($kandidat);
     }
 
     /**
@@ -160,8 +150,10 @@ class KandidatController extends Controller
         }
     }
 
-    public function get_kandidat() 
+    public function getKandidat(Request $request) 
     {
+        $periodeId = $request->get('periodeId');
+
         $kandidat = DB::table('kandidat as ka')
                     ->join('siswa as s', 'ka.siswa_id', '=', 's.id')
                     ->join('kelas as k', 's.kelas_id', '=', 'k.id')
@@ -169,23 +161,31 @@ class KandidatController extends Controller
                     ->select('s.nama as nama_siswa', 'ka.*', 'k.nama as nama_kelas', 'p.nama as nama_periode')
                     ->orderBy('k.created_at', 'DESC');
 
-        $periode = DB::table('periode')->where('status', 'active')->first();
+        if ($periodeId != null) {
+            $periode = DB::table('periode')
+                        ->where('id', $periodeId)
+                        ->first();
+        } else {
+            $periode = DB::table('periode')->where('status', 'active')->first();
+        }
+
+        $cek = $kandidat->where('p.nama', $periode->nama)->get();
         
-        if (count($kandidat->get()) > 0) {
-            if (!empty($periode)) {
+        if (count($cek) > 0) {
+            // if (!empty($periode)) {
                 return response()->json([
                     'status' => true,
                     'message' => 'Success retrieve candidate data',
                     'data' => $kandidat->where('p.nama', $periode->nama)
                                 ->get()
                 ]);
-            } else {
-                return response()->json([
-                    'status' => true,
-                    'message' => 'Success retrieve candidate data',
-                    'data' => $kandidat->get()
-                ]);
-            }
+            // } else {
+            //     return response()->json([
+            //         'status' => true,
+            //         'message' => 'Success retrieve candidate data',
+            //         'data' => $kandidat->get()
+            //     ]);
+            // }
         } else {
             return response()->json([
                 'status' => false,

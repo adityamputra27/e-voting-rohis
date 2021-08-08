@@ -149,7 +149,7 @@
       })
     }
 
-    loadKandidat()
+    // loadKandidat()
 
     $(document).on('click', '.hapus_kandidat', function (e) {
       e.preventDefault()
@@ -215,6 +215,27 @@
       modal.find('#periodeKandidat').text(periode)
       modal.find('#suaraKandidat').text(suara)
       modal.find('#fotoKandidat').attr('src', foto)
+    })
+
+    // Filtering
+    $('#filterByPeriode').on('click', function (e) {
+      let periodeValue = $('#periode').val()
+      // alert(periodeValue)
+      $.ajax({
+        url: "{{ route('getkandidat') }}",
+        type: "GET",
+        dataType: "json",
+        data: {
+          periodeId: periodeValue
+        },
+        header: {
+          'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+        },
+        success:function(result) {
+          console.log(result)
+          loadKandidat()
+        }
+      })
     })
 
     // Chart
@@ -459,6 +480,7 @@
       jumlahSuaraKandidatKetua()
       presentaseKandidatKetua()
       jumlahSuaraKandidatKeputrian()
+      presentaseKandidatKeputrian()
     }, 3000);
 
   })

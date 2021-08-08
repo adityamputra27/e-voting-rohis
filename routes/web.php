@@ -39,7 +39,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('waktu-voting', WaktuVotingController::class);
         Route::get('periode', [PeriodeController::class, 'index'])->name('periode.index');
         Route::get('periode/{periode}/apply', [PeriodeController::class, 'apply'])->name('periode.apply');
-        Route::get('get-kandidat', [KandidatController::class, 'get_kandidat'])->name('getkandidat');
+        Route::get('get-kandidat/', [KandidatController::class, 'getKandidat'])->name('getkandidat');
     });
 });
 

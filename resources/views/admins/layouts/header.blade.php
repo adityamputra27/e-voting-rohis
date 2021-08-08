@@ -44,6 +44,9 @@
       width: 300px;
       height: 300px;
     }
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+      top: 5px !important;
+    }
   </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
