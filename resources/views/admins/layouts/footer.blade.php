@@ -104,52 +104,63 @@
     }
 
     function loadKandidat() {
+      $('#kandidat_data').html('');
+      let periodeSelected = $('#periode').val();
       let row = ''
-      $.get("{{ route('getkandidat') }}", function (data) {
-        console.log(data)
-        if (data.status == true) {
-          
-          data.data.forEach((element, index) => {
-            row += `
-            <div class="col-md-4">
-                <div class="card card-primary card-outline">
-                    <div class="card-body box-profile">
-                        <div class="text-center">
-                            <img class="profile-user-img img-fluid img-circle" src="{{ Storage::url('${element.foto}') }}" alt="User profile picture">
-                        </div>
-                        <h3 class="profile-username text-center">${element.nama_siswa}</h3>
-                        <p class="text-muted text-center">${element.nama_kelas}</p>
-                        <div class="text-center">
-                          <div class="btn-group">
-                                <a href="{{ url('admin/kandidat/${element.id}/edit') }}" class="btn btn-primary"><i class="fa fa-edit"></i></a>
-                                <a href="#" data-visi="${element.visi}" data-misi="${element.misi}" data-foto="{{ Storage::url('${element.foto}') }}"
-                                data-suara="${element.jumlah_suara}" data-nama="${element.nama_siswa}" data-kelas="${element.nama_kelas}"
-                                data-periode="${element.nama_periode}"
-                                 class="btn btn-primary bg-purple" data-toggle="modal" data-target="#modalDetailKandidat"
-                                 ><i class="fa fa-eye"></i></a>
-                                <a href="#" class="btn btn-danger hapus_kandidat"
-                                data-route="{{ url('admin/kandidat/${element.id}/') }}" data-id="${element.id}" data-nama="${element.nama_siswa}"><i class="fa fa-trash"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-            </div>
-            ` 
-          })
+      $.ajax({
+        url: "{{ route('getkandidat') }}",
+        type: "GET",
+        dataType: "json",
+        data: {
+          periodeId: periodeSelected
+        },
+        header: {
+          'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+        },
+        success:function(result) {
+          if (result.status == true) {
+            result.data.forEach((element, index) => {
+              row += `
+              <div class="col-md-4">
+                  <div class="card card-primary card-outline">
+                      <div class="card-body box-profile">
+                          <div class="text-center">
+                              <img class="profile-user-img img-fluid img-circle" src="{{ Storage::url('${element.foto}') }}" alt="User profile picture">
+                          </div>
+                          <h3 class="profile-username text-center">${element.nama_siswa}</h3>
+                          <p class="text-muted text-center">${element.nama_kelas}</p>
+                          <div class="text-center">
+                            <div class="btn-group">
+                                  <a href="{{ url('admin/kandidat/${element.id}/edit') }}" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                                  <a href="#" data-visi="${element.visi}" data-misi="${element.misi}" data-foto="{{ Storage::url('${element.foto}') }}"
+                                  data-suara="${element.jumlah_suara}" data-nama="${element.nama_siswa}" data-kelas="${element.nama_kelas}"
+                                  data-periode="${element.nama_periode}"
+                                  class="btn btn-primary bg-purple" data-toggle="modal" data-target="#modalDetailKandidat"
+                                  ><i class="fa fa-eye"></i></a>
+                                  <a href="#" class="btn btn-danger hapus_kandidat"
+                                  data-route="{{ url('admin/kandidat/${element.id}/') }}" data-id="${element.id}" data-nama="${element.nama_siswa}"><i class="fa fa-trash"></i></a>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- /.card-body -->
+                  </div>
+              </div>
+              ` 
+            })
 
-        } else {
-          row += `
-            <div class="col-md-12">
-              <div class="alert alert-warning text-center">${data.message}</div>
-            </div>
-          `
+          } else {
+            row += `
+              <div class="col-md-12">
+                <div class="alert alert-warning text-center">${result.message}</div>
+              </div>
+            `
+          }
+          $('#kandidat_data').append(row)
         }
-        $('#kandidat_data').append(row)
       })
     }
 
-    // loadKandidat()
+    loadKandidat()
 
     $(document).on('click', '.hapus_kandidat', function (e) {
       e.preventDefault()
@@ -232,7 +243,6 @@
           'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
         },
         success:function(result) {
-          console.log(result)
           loadKandidat()
         }
       })
