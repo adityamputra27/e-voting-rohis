@@ -19,27 +19,25 @@
 <!-- /.content-header -->
 <section class="content">
     <div class="container-fluid">
-        <form action="#">
-            <div class="row">
-                <div class="col-md-10">
-                    <div class="form-group">
-                        <label for="">Pilih Periode : </label>
-                        <select name="" id="" class="form-control">
-                            <option value="">-- Pilih --</option>
-                            @foreach($periode as $key => $value)
-                            <option value="{{ $value->id }}"
-                            {{ $value->id == @$periode_aktif->id ? 'selected' : '' }}    
-                            >{{ $value->nama }} {{ $value->nama == @$periode_aktif->nama ? '- Sedang Aktif' : '' }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <br>
-                    <button class="btn btn-success btn-block mt-2"><i class="fa fa-filter"></i> Filter</button>
+        <div class="row">
+            <div class="col-md-10">
+                <div class="form-group">
+                    <label for="">Pilih Periode : </label>
+                    <select name="" id="quickCount" class="form-control">
+                        <option value="">-- Pilih --</option>
+                        @foreach($periode as $key => $value)
+                        <option value="{{ $value->id }}"
+                        {{ $value->id == @$periode_aktif->id ? 'selected' : '' }}    
+                        >{{ $value->nama }} {{ $value->nama == @$periode_aktif->nama ? '- Sedang Aktif' : '' }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
-        </form>
+            <div class="col-md-2">
+                <br>
+                <button class="btn btn-success btn-block mt-2" id="filterQuickCount"><i class="fa fa-filter"></i> Filter</button>
+            </div>
+        </div>
     </div>
 </section>
 <!-- Main content -->
@@ -51,7 +49,7 @@
                     <h5>Perolehan Suara - Kandidat Ketua</h5>
                 </div>
             </div>
-            <div class="card-body">
+            <div class="card-body chartContainerKetua">
                 <div class="row">
                     <div class="col-md-6">
                         <canvas id="kandidatKetua1" width="200" height="200"></canvas>
@@ -74,7 +72,7 @@
                     <h5>Perolehan Suara - Kandidat Keputrian</h5>
                 </div>
             </div>
-            <div class="card-body">
+            <div class="card-body chartContainerKeputrian">
                 <div class="row">
                     <div class="col-md-6">
                         <canvas id="kandidatKeputrian1" width="200" height="200"></canvas>

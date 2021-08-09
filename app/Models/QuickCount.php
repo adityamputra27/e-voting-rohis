@@ -57,8 +57,25 @@ class QuickCount extends Model
         if (count($kandidat) > 0) {
             
             $result = [];
-            $countDataPemilih = DB::table('pemilih')->where('status_id', '2')->count();
-
+            if ($kategori == 'keputrian') {
+                $countDataPemilih = DB::table('pemilih as pe')
+                                        ->join('siswa as s', function($join) {
+                                            $join->on('pe.siswa_id', '=', 's.id')
+                                                 ->where('s.jenis_kelamin', '=', 'Perempuan')
+                                                 ->where('pe.status_id', '=', '2')
+                                                 ->orderBy('s.nama', 'ASC');
+                                        })
+                                        ->count();
+            } else if ($kategori == 'ketua'){
+                $countDataPemilih = DB::table('pemilih as pe')
+                                        ->join('siswa as s', function ($join) {
+                                            $join->on('pe.siswa_id', '=', 's.id')
+                                                 ->whereIn('s.jenis_kelamin', ['Laki - laki', 'Perempuan'])
+                                                 ->where('pe.status_id', '=', '2')
+                                                 ->orderBy('s.nama', 'ASC');
+                                        })
+                                        ->count();
+            }
             foreach ($kandidat as $key => $value) {
                 $result[] = [
                     'nama_siswa' => $value->nama_siswa,

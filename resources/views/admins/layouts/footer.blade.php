@@ -103,6 +103,8 @@
             .replace(/'/g, "&#039;");
     }
 
+    let quickCountSelected = $('#quickCount').val() ?? ''
+
     function loadKandidat() {
       $('#kandidat_data').html('');
       let periodeSelected = $('#periode').val();
@@ -405,6 +407,9 @@
         url: "{{ route('quick-count.get-jumlah-suara-kandidat-ketua') }}",
         type: "GET",
         dataType: "json",
+        data: {
+          periodeId: quickCountSelected
+        },
         header: {
           'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
         },
@@ -431,6 +436,9 @@
         url: "{{ route('quick-count.get-presentase-kandidat-ketua') }}",
         type: "GET",
         dataType: "json",
+        data: {
+          periodeId: quickCountSelected
+        },
         header: {
           'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
         },
@@ -458,6 +466,9 @@
         url: "{{ route('quick-count.get-jumlah-suara-kandidat-keputrian') }}",
         type: "GET",
         dataType: "json",
+        data: {
+          periodeId: quickCountSelected
+        },
         header: {
           'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
         },
@@ -484,6 +495,9 @@
         url: "{{ route('quick-count.get-presentase-kandidat-keputrian') }}",
         type: "GET",
         dataType: "json",
+        data: {
+          periodeId: quickCountSelected
+        },
         header: {
           'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
         },
@@ -503,6 +517,30 @@
     }
 
     presentaseKandidatKeputrian()
+
+    // Filter quick count
+    $('#filterQuickCount').on('click', function (e) {
+      let quickCount = $('#quickCount').val()
+      $('.chartContainerKetua').html('')
+      $('.chartContainerKeputrian').html('')
+      $.ajax({
+        // url:
+        type: "GET",
+        dataType: "json",
+        data: {
+          periodeId: quickCount
+        },
+        header: {
+          'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+        },
+        success:function(result) {
+          jumlahSuaraKandidatKetua()
+          presentaseKandidatKetua()
+          jumlahSuaraKandidatKeputrian()
+          presentaseKandidatKeputrian()
+        }
+      })
+    })
 
     // Update realtime
     setInterval(() => {

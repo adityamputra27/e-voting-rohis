@@ -27,7 +27,7 @@
             <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>0</h3>
+                        <h3>{{ $pemilih }}</h3>
                         <p>Total Seluruh Pemilih</p>
                         </div>
                         <div class="icon">
@@ -40,8 +40,8 @@
                 <!-- small box -->
                     <div class="small-box bg-success">
                         <div class="inner">
-                        <h3>0</h3>
-                        <p>Total Kandidat</p>
+                        <h3>{{ $kandidat }}</h3>
+                        <p>Total Seluruh Kandidat</p>
                         </div>
                         <div class="icon">
                         <i class="fa fa-users"></i>
@@ -53,7 +53,7 @@
                 <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>0</h3>
+                            <h3>{{ $sudahVoting }}</h3>
                             <p>Total Sudah Voting <br> Periode: {{ $periode_aktif->nama }}</p>
                         </div>
                         <div class="icon">
@@ -66,7 +66,7 @@
                 <!-- small box -->
                     <div class="small-box bg-danger">
                         <div class="inner">
-                            <h3>0</h3>
+                            <h3>{{ $belumVoting }}</h3>
                             <p>Total Belum Voting <br> Periode: {{ $periode_aktif->nama }}</p>
                         </div>
                         <div class="icon">
