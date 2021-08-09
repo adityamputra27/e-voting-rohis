@@ -59,13 +59,13 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="">Cari Nama :</label>
-                            <input type="text" class="form-control">
+                            <input type="text" id="namaKandidat" class="form-control">
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
                             <br>
-                            <button class="btn btn-success btn-block mt-2"><i class="fa fa-search"></i> Cari</button>
+                            <button class="btn btn-success btn-block mt-2" id="filterByNama"><i class="fa fa-search"></i> Cari</button>
                         </div>
                     </div>
                 </div>

@@ -106,13 +106,15 @@
     function loadKandidat() {
       $('#kandidat_data').html('');
       let periodeSelected = $('#periode').val();
+      let namaSelected = $('#namaKandidat').val()
       let row = ''
       $.ajax({
         url: "{{ route('getkandidat') }}",
         type: "GET",
         dataType: "json",
         data: {
-          periodeId: periodeSelected
+          periodeId: periodeSelected,
+          namaKandidat: namaSelected
         },
         header: {
           'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
@@ -238,6 +240,23 @@
         dataType: "json",
         data: {
           periodeId: periodeValue
+        },
+        header: {
+          'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+        },
+        success:function(result) {
+          loadKandidat()
+        }
+      })
+    })
+    $('#filterByNama').on('click', function (e) {
+      let namaKandidat = $('#namaKandidat').val()
+      $.ajax({
+        url: "{{ route('getkandidat') }}",
+        type: "GET",
+        dataType: "json",
+        data: {
+          namaKandidat: namaKandidat
         },
         header: {
           'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')

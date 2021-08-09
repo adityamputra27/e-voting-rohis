@@ -154,6 +154,7 @@ class KandidatController extends Controller
     {
         if ($request->ajax()) {
             $periodeId = $request->get('periodeId');
+            $namaKandidat = $request->get('namaKandidat');
 
             $kandidat = DB::table('kandidat as ka')
                         ->join('siswa as s', 'ka.siswa_id', '=', 's.id')
@@ -174,12 +175,31 @@ class KandidatController extends Controller
             
             if (count($cek) > 0) {
                 if (!empty($periode)) {
-                    return response()->json([
-                        'status' => true,
-                        'message' => 'Success retrieve candidate data',
-                        'data' => $kandidat->where('p.nama', $periode->nama)
-                                    ->get()
-                    ]);
+                    if (!empty($namaKandidat)) {
+                        $searchData = $kandidat->where('p.nama', $periode->nama)
+                                    ->where('s.nama', 'LIKE', "%$namaKandidat%")
+                                    ->get();
+                        if (count($searchData) > 0) {
+                            return response()->json([
+                                'status' => true,
+                                'message' => 'Success retrieve candidate data',
+                                'data' => $searchData
+                            ]);
+                        } else {
+                            return response()->json([
+                                'status' => false,
+                                'message' => 'Hasil Pencarian Nama Kandidat : <b>'.$namaKandidat.'</b> Tidak Ditemukan!',
+                                'data' => null
+                            ]);
+                        }
+                    } else {
+                        return response()->json([
+                            'status' => true,
+                            'message' => 'Success retrieve candidate data',
+                            'data' => $kandidat->where('p.nama', $periode->nama)
+                                        ->get()
+                        ]);
+                    }
                 } else {
                     return response()->json([
                         'status' => true,
