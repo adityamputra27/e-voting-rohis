@@ -23,13 +23,14 @@
                         <div class="card-body">
                             <div class="text-center">
                                 <img src="{{ Storage::url($value->foto) }}" width="150" alt="" class="img-fluid img-circle mb-3" style="border-radius: 50%;">
-                                <h5 class="card-title">{{ $value->nama_siswa }}</h5>
+                                <h5 class="card-title">{{ $value->no_urut }} - {{ $value->nama_siswa }}</h5>
                                 <p>{{ $value->nama_kelas }}</p>
                                 <div class="btn-group">
                                 <a href="#" data-visi="{{ $value->visi }}" data-misi="{{ $value->misi }}" data-foto="{{ Storage::url($value->foto) }}"
                                     data-nama="{{ $value->nama_siswa }}" data-kelas="{{ $value->nama_kelas }}"
                                     data-periode="{{ $value->nama_periode }}" data-keterangan="{{ $value->kategori == 'ketua' ? 'Kandidat Calon Ketua ROHIS' : 'Kandidat Calon Ketua Keputrian' }}"
                                     class="btn btn-primary bg-purple" data-toggle="modal" data-target="#modalDetailKandidat"
+                                    data-urut="{{ $value->no_urut }}"
                                     ><i class="fa fa-eye"></i>
                                     Detail
                                 </a>
@@ -117,10 +118,12 @@
         let foto = button.data('foto')
         let periode = button.data('periode')
         let keterangan = button.data('keterangan')
+        let noUrut = button.data('urut')
 
         modal.find('#detailKandidat').text(nama)
         modal.find('#namaKandidat').text(nama)
         modal.find('#kelasKandidat').text(kelas)
+        modal.find('#noUrutKandidat').text(noUrut)
         modal.find('#visiKandidat').html(visi)
         modal.find('#misiKandidat').html(misi)
         modal.find('#periodeKandidat').text(periode)

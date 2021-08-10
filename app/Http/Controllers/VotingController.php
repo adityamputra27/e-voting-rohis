@@ -34,7 +34,11 @@ class VotingController extends Controller
                     ->join('periode as p', 'ka.periode_id', '=', 'p.id')
                     ->join('siswa as s', 'ka.siswa_id', '=', 's.id')
                     ->join('kelas as ke', 's.kelas_id', '=', 'ke.id')
-                    ->select('p.nama as nama_periode', 'ka.*', 's.nama as nama_siswa', 'ke.nama as nama_kelas');
+                    ->select('p.nama as nama_periode', 'ka.*', 
+                    's.nama as nama_siswa', 'ke.nama as nama_kelas')
+                    ->orderBy('ka.kategori', 'DESC')
+                    ->orderBy('ka.no_urut', 'ASC')
+                    ->orderBy('ka.created_at', 'DESC');
                     // ->where('p.id', )
                     // ->get();
         

@@ -33,7 +33,7 @@
                 <table class="table table-bordered table-hovered">
                   <tr>
                     <th>No Urut :</th>
-                    <td class="bg-primary text-center"><span id="noUrut"></span></td>
+                    <td class="bg-primary text-center text-bold"><span id="noUrut"></span></td>
                   </tr>
                   <tr>
                       <th>Visi : </th>
@@ -47,10 +47,6 @@
                       <th>Jumlah Suara :</th>
                       <td><span id="suaraKandidat"></span> suara</td>
                   </tr>
-                  <tr>
-                        <th>Keterangan :</th>
-                        <td> <span id="keteranganKandidat"></span></td>
-                    </tr>
                 </table>
             </div>
         </div>

@@ -27,22 +27,26 @@
                         <th>Periode :</th>
                         <td><span class="badge badge-primary"> <span id="periodeKandidat"></span></span></td>
                     </tr>
-                    <tr>
-                        <th>Keterangan :</th>
-                        <td> <span id="keteranganKandidat"></span></td>
-                    </tr>
                 </table>
             </div>
             <div class="col-md-7">
                 <table class="table table-bordered table-hovered">
-                    <tr>
-                        <th>Visi : </th>
-                        <td><span id="visiKandidat"></span></td>
-                    </tr>
-                    <tr>
-                        <th>Misi :</th>
-                        <td><span id="misiKandidat"></span></td>
-                    </tr>
+                  <tr>
+                    <th>No Urut :</th>
+                    <td class="bg-success text-center text-white" style="font-weight: bold;"><span id="noUrutKandidat"></span></td>
+                  </tr>
+                  <tr>
+                      <th>Visi : </th>
+                      <td><span id="visiKandidat"></span></td>
+                  </tr>
+                  <tr>
+                      <th>Misi :</th>
+                      <td><span id="misiKandidat"></span></td>
+                  </tr>
+                  <tr>
+                      <th>Keterangan :</th>
+                      <td> <span id="keteranganKandidat"></span></td>
+                  </tr>
                 </table>
             </div>
         </div>
