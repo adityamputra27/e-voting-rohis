@@ -31,17 +31,25 @@
             </div>
             <div class="col-md-7">
                 <table class="table table-bordered table-hovered">
-                    <tr>
-                        <th>Visi : </th>
-                        <td><span id="visiKandidat"></span></td>
-                    </tr>
-                    <tr>
-                        <th>Misi :</th>
-                        <td><span id="misiKandidat"></span></td>
-                    </tr>
-                    <tr>
-                        <th>Jumlah Suara :</th>
-                        <td><span id="suaraKandidat"></span> suara</td>
+                  <tr>
+                    <th>No Urut :</th>
+                    <td class="bg-primary text-center"><span id="noUrut"></span></td>
+                  </tr>
+                  <tr>
+                      <th>Visi : </th>
+                      <td><span id="visiKandidat"></span></td>
+                  </tr>
+                  <tr>
+                      <th>Misi :</th>
+                      <td><span id="misiKandidat"></span></td>
+                  </tr>
+                  <tr>
+                      <th>Jumlah Suara :</th>
+                      <td><span id="suaraKandidat"></span> suara</td>
+                  </tr>
+                  <tr>
+                        <th>Keterangan :</th>
+                        <td> <span id="keteranganKandidat"></span></td>
                     </tr>
                 </table>
             </div>

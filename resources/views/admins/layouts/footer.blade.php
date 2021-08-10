@@ -131,14 +131,15 @@
                           <div class="text-center">
                               <img class="profile-user-img img-fluid img-circle" src="{{ Storage::url('${element.foto}') }}" alt="User profile picture">
                           </div>
-                          <h3 class="profile-username text-center">${element.nama_siswa}</h3>
+                          <h3 class="profile-username text-center">${element.no_urut} - ${element.nama_siswa}</h3>
                           <p class="text-muted text-center">${element.nama_kelas}</p>
                           <div class="text-center">
                             <div class="btn-group">
                                   <a href="{{ url('admin/kandidat/${element.id}/edit') }}" class="btn btn-primary"><i class="fa fa-edit"></i></a>
                                   <a href="#" data-visi="${element.visi}" data-misi="${element.misi}" data-foto="{{ Storage::url('${element.foto}') }}"
                                   data-suara="${element.jumlah_suara}" data-nama="${element.nama_siswa}" data-kelas="${element.nama_kelas}"
-                                  data-periode="${element.nama_periode}"
+                                  data-periode="${element.nama_periode}" data-urut="${element.no_urut}"
+                                  data-keterangan="${element.kategori}"
                                   class="btn btn-primary bg-purple" data-toggle="modal" data-target="#modalDetailKandidat"
                                   ><i class="fa fa-eye"></i></a>
                                   <a href="#" class="btn btn-danger hapus_kandidat"
@@ -221,14 +222,26 @@
       let foto = button.data('foto')
       let suara = button.data('suara')
       let periode = button.data('periode')
+      let noUrut = button.data('urut');
+      let keterangan = button.data('keterangan');
+
+      let kategori = ''
+
+      if (keterangan == 'ketua') {
+        kategori = 'Kandidat Calon Ketua ROHIS'
+      } else {
+        kategori = 'Kandidat Calon Ketua Keputrian'
+      }
 
       modal.find('#detailKandidat').text(nama)
       modal.find('#namaKandidat').text(nama)
       modal.find('#kelasKandidat').text(kelas)
+      modal.find('#noUrut').text(noUrut)
       modal.find('#visiKandidat').html(visi)
       modal.find('#misiKandidat').html(misi)
       modal.find('#periodeKandidat').text(periode)
       modal.find('#suaraKandidat').text(suara)
+      modal.find('#keteranganKandidat').text(kategori)
       modal.find('#fotoKandidat').attr('src', foto)
     })
 

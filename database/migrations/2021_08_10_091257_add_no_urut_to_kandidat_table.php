@@ -14,7 +14,7 @@ class AddNoUrutToKandidatTable extends Migration
     public function up()
     {
         Schema::table('kandidat', function (Blueprint $table) {
-            $table->string('no_urut', 100)->after('siswa_id');
+            $table->string('no_urut', 100)->after('siswa_id')->nullable();
         });
     }
 

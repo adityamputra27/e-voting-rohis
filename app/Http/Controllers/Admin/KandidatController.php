@@ -49,7 +49,13 @@ class KandidatController extends Controller
         $kandidat->misi = $request->misi;
 
         // Generate no_urut
-        // $kategori = DB::table('')
+        $lastNoUrut = DB::table('kandidat')
+                        ->select('no_urut')
+                        ->where('kategori', '=', $request->kategori)
+                        ->orderBy('created_at', 'DESC')
+                        ->first();
+        
+        $noUrut = $lastNoUrut == NULL ? $noUrut = '01' : $noUrut = sprintf('%02d', substr($lastNoUrut->no_urut, 0) + 1);
 
         if ($request->file('foto')) {
             $foto = $request->file('foto');
@@ -63,8 +69,9 @@ class KandidatController extends Controller
         $kandidat->periode_id = $periode->id;
         $kandidat->jumlah_suara = 0;
         $kandidat->kategori = $request->kategori;
+        $kandidat->no_urut = $noUrut;
         $kandidat->save();
-
+        // dd($kandidat);
         Session::flash('success', 'Data Kandidat Berhasil Ditambahkan!');
         return redirect()->route('kandidat.index');
     }
@@ -164,6 +171,8 @@ class KandidatController extends Controller
                         ->join('kelas as k', 's.kelas_id', '=', 'k.id')
                         ->join('periode as p', 'ka.periode_id', '=', 'p.id')
                         ->select('s.nama as nama_siswa', 'ka.*', 'k.nama as nama_kelas', 'p.nama as nama_periode')
+                        ->orderBy('ka.kategori', 'DESC')
+                        ->orderBy('ka.no_urut', 'ASC')
                         ->orderBy('k.created_at', 'DESC');
 
             if ($periodeId == null) {
