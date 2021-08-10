@@ -183,6 +183,8 @@ class KandidatController extends Controller
                             ->first();
             }
 
+            $periode = $periodeId == NULL ? $periode = DB::table('periode')->where('status', 'active')->first() : $periode = DB::table('periode')->where('id', $periodeId)->first();
+
             $cek = $kandidat->where('p.nama', $periode->nama)->get();
             
             if (count($cek) > 0) {
