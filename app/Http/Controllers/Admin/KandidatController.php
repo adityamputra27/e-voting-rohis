@@ -175,14 +175,6 @@ class KandidatController extends Controller
                         ->orderBy('ka.no_urut', 'ASC')
                         ->orderBy('k.created_at', 'DESC');
 
-            if ($periodeId == null) {
-                $periode = DB::table('periode')->where('status', 'active')->first();
-            } else {
-                $periode = DB::table('periode')
-                            ->where('id', $periodeId)
-                            ->first();
-            }
-
             $periode = $periodeId == NULL ? $periode = DB::table('periode')->where('status', 'active')->first() : $periode = DB::table('periode')->where('id', $periodeId)->first();
 
             $cek = $kandidat->where('p.nama', $periode->nama)->get();

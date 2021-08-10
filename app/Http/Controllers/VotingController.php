@@ -127,7 +127,10 @@ class VotingController extends Controller
             $id = $request->id;
             $token = Session::get('token');
             $kandidat = DB::table('kandidat')->where('id', $id)->get();
-            $pemilih = DB::table('pemilih')->where('token', $token)->get();
+            $pemilih = DB::table('pemilih as pe')
+                        ->join('siswa as s', 'pemilih.siswa_id', '=', 'siswa.id')
+                        ->select('s.*', 'pe.*')
+                        ->where('token', $token)->get();
             $waktu = DB::table('waktu_voting')->where('periode_id', $this->periode->id)->first();
             $dateEnd = $waktu->tanggal_selesai;
             $timeEnd = $waktu->jam_selesai;
@@ -161,12 +164,14 @@ class VotingController extends Controller
                 return response()->json([
                     'status' => true,
                     'message' => 'Berhasil memilih kandidat!',
+                    'code' => 202,
                     'url' => route('sudah_voting')
                 ]);
             } else {
                 return response()->json([
                     'status' => false,
                     'message' => 'Anda Sudah Memilih!',
+                    'code' => 500,
                     'url' => route('logout_siswa')
                 ]);
             }
