@@ -48,6 +48,9 @@ class KandidatController extends Controller
         $kandidat->visi = $request->visi;
         $kandidat->misi = $request->misi;
 
+        // Generate no_urut
+        // $kategori = DB::table('')
+
         if ($request->file('foto')) {
             $foto = $request->file('foto');
             $store = $foto->store('admins/kandidat', 'public');

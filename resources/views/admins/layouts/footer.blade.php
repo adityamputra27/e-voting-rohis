@@ -521,10 +521,8 @@
     // Filter quick count
     $('#filterQuickCount').on('click', function (e) {
       let quickCount = $('#quickCount').val()
-      $('.chartContainerKetua').html('')
-      $('.chartContainerKeputrian').html('')
       $.ajax({
-        // url:
+        url: "",
         type: "GET",
         dataType: "json",
         data: {

@@ -80,7 +80,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('quick-count.index') }}" class="nav-link {{ set_active('quick-count.index') }">
+            <a href="{{ route('quick-count.index') }}" class="nav-link {{ set_active('quick-count.index') }}">
               <i class="nav-icon fa fa-chart-pie"></i>
               <p>
                 Quick Count
@@ -97,7 +97,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route('users.edit', Auth::user()->id) }}" class="nav-link">
               <i class="nav-icon far fa-edit"></i>
               <p>
                 Edit Profile

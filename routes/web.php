@@ -40,6 +40,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('periode', [PeriodeController::class, 'index'])->name('periode.index');
         Route::get('periode/{periode}/apply', [PeriodeController::class, 'apply'])->name('periode.apply');
         Route::get('get-kandidat/', [KandidatController::class, 'getKandidat'])->name('getkandidat');
+        Route::get('users/{userId}/edit', [AuthController::class, 'edit'])->name('users.edit');
+        Route::patch('users/{userId}/update', [AuthController::class, 'update'])->name('users.update');
     });
 });
 
