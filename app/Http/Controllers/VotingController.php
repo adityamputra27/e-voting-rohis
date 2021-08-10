@@ -164,8 +164,11 @@ class VotingController extends Controller
                     'url' => route('sudah_voting')
                 ]);
             } else {
-                Session::flash('error', 'Token sudah digunakan!');
-                return redirect('siswa/voting/login');
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Anda Sudah Memilih!',
+                    'url' => route('logout_siswa')
+                ]);
             }
         }
     }

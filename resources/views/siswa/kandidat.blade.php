@@ -155,11 +155,8 @@
                         _token: token
                     },
                     success:function(data) {
-                        // console.log(data.status)
                         if (data.status == true) {
-                            // setTimeout(() => {
-                                window.location.href = data.url
-                            // }, 1000);
+                            window.location.href = data.url
                         } else {
                             Swal.fire({
                                 'icon': 'error',
